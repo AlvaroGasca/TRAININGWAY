@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Convertirse en Entrenador</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+<body>
+
+<div class="container">
+    <h1>¡Conviértete en Entrenador!</h1>
+    <div id="mensajeExito" style="display: none;" class="alert alert-success" role="alert">
+        ¡Enhorabuena! Ahora eres un entrenador.
+    </div>
+    <form id="formularioEntrenador" th:action="@{/convertirEntrenador/{id}(id=${usuario.id})}" method="post">
+        <div class="mb-3">
+            <label for="especialidad" class="form-label">Especialidad:</label>
+            <input type="text" class="form-control" id="especialidad" name="especialidad" th:value="${usuario.especialidad}">
+        </div>
+        <div id="nuevasEspecialidades">
+            <!-- Aquí se agregarán los campos de las nuevas especialidades -->
+        </div>
+        <button type="button" class="btn btn-primary" onclick="agregarCampoEspecialidad()">Agregar más especialidades</button>
+        <button type="submit" class="btn btn-success">Enviar</button>
+    </form>
+</div>
+
+<script>
+    function agregarCampoEspecialidad() {
+        var nuevasEspecialidadesDiv = document.getElementById("nuevasEspecialidades");
+        var nuevoCampoEspecialidad = document.createElement("div");
+        nuevoCampoEspecialidad.classList.add("mb-3");
+        nuevoCampoEspecialidad.innerHTML = '<label class="form-label">Especialidad:</label>' +
+            '<input type="text" class="form-control" name="especialidad">';
+        nuevasEspecialidadesDiv.appendChild(nuevoCampoEspecialidad);
+    }
+
+    document.getElementById("formularioEntrenador").addEventListener("submit", function(event) {
+        event.preventDefault(); // Evitar el envío del formulario
+
+        // Obtener los datos del formulario
+        var formulario = event.target;
+        var especialidades = [];
+        var inputsEspecialidad = formulario.querySelectorAll("input[name='especialidad']");
+        inputsEspecialidad.forEach(function(input) {
+            if (input.value.trim() !== "") {
+                especialidades.push(input.value.trim());
+            }
+        });
+
+        // Simular el envío de los datos a la base de datos
+        console.log("Especialidades a enviar:", especialidades);
+
+        // Mostrar el mensaje de éxito
+        var mensajeExito = document.getElementById("mensajeExito");
+        mensajeExito.style.display = "block";
+
+        // Redirigir a listaCoches después de 3 segundos
+        setTimeout(function() {
+            window.location.href = "/listaCoches";
+        }, 3000);
+    });
+</script>
+
+</body>
+</html>
