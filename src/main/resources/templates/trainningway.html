@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrainningWay</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        .navbar-brand img {
+            max-height: 50px;
+        }
+
+        .navbar-nav {
+            margin-left: auto;
+        }
+
+        .card {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-text {
+            font-size: 1rem;
+            color: #6c757d;
+        }
+
+        .search-bar {
+            margin-bottom: 20px;
+        }
+
+        .search-bar input[type="text"] {
+            border-radius: 20px;
+        }
+
+        .news-section {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .news-card {
+            margin-bottom: 20px;
+        }
+
+        .news-card img {
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            max-height: 200px;
+            object-fit: cover;
+        }
+
+        .news-card-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .news-card-text {
+            font-size: 1rem;
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Barra de navegación -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+        <a class="navbar-brand" href="#"><img src="/assets/logo.PNG" alt="Logo" style="max-height: 50px;"></a>
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+                <a class="nav-link" href="#">Personas Favoritas</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="#">Ajustes</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<!-- Barra de búsqueda -->
+<div class="container mt-3 mb-3">
+    <div class="input-group">
+        <input type="text" class="form-control" placeholder="Buscar...">
+        <button class="btn btn-primary" type="button">Buscar</button>
+    </div>
+</div>
+
+<!-- Sección de tarjetas -->
+<div class="container">
+    <div class="row">
+        <!-- Tarjeta de eventos -->
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <img src="assets/evento.jpg" class="card-img-top" alt="Imagen de Eventos">
+                <div class="card-body">
+                    <h5 class="card-title">Eventos</h5>
+                </div>
+            </div>
+        </div>
+        <!-- Tarjeta de entrenadores -->
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <img src="ruta-a-la-imagen-entrenadores.jpg" class="card-img-top" alt="Imagen de Entrenadores">
+                <div class="card-body">
+                    <h5 class="card-title">Entrenadores</h5>
+                </div>
+            </div>
+        </div>
+        <!-- Tarjeta de tienda -->
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <img src="ruta-a-la-imagen-tienda.jpg" class="card-img-top" alt="Imagen de Tienda">
+                <div class="card-body">
+                    <h5 class="card-title">Tienda</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Sección de noticias -->
+<div class="container mt-5">
+    <h2>Noticias</h2>
+    <div class="row">
+        <!-- Tarjeta de noticia 1 -->
+        <div class="col-md-3">
+            <div class="card mb-4">
+                <img src="ruta-a-la-imagen-noticia-1.jpg" class="card-img-top" alt="Imagen de Noticia 1">
+                <div class="card-body">
+                    <h5 class="card-title">Título de la Noticia 1</h5>
+                    <p class="card-text">Contexto breve de la noticia 1...</p>
+                </div>
+            </div>
+        </div>
+        <!-- Tarjeta de noticia 2 -->
+        <div class="col-md-3">
+            <div class="card mb-4">
+                <img src="ruta-a-la-imagen-noticia-2.jpg" class="card-img-top" alt="Imagen de Noticia 2">
+                <div class="card-body">
+                    <h5 class="card-title">Título de la Noticia 2</h5>
+                    <p class="card-text">Contexto breve de la noticia 2...</p>
+                </div>
+            </div>
+        </div>
+        <!-- Tarjeta de noticia 3 -->
+        <div class="col-md-3">
+            <div class="card mb-4">
+                <img src="ruta-a-la-imagen-noticia-3.jpg" class="card-img-top" alt="Imagen de Noticia 3">
+                <div class="card-body">
+                    <h5 class="card-title">Título de la Noticia 3</h5>
+                    <p class="card-text">Contexto breve de la noticia 3...</p>
+                </div>
+            </div>
+        </div>
+        <!-- Tarjeta de noticia 4 -->
+        <div class="col-md-3">
+            <div class="card mb-4">
+                <img src="ruta-a-la-imagen-noticia-4.jpg" class="card-img-top" alt="Imagen de Noticia 4">
+                <div class="card-body">
+                    <h5 class="card-title">Título de la Noticia 4</h5>
+                    <p class="card-text">Contexto breve de la noticia 4...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
+</body>
+</html>
+
