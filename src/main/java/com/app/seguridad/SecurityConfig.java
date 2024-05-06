@@ -2,9 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.usuariosCoches.seguridad;
+package com.app.seguridad;
 
-import com.usuariosCoches.usuario.UsuarioService;
+import com.app.usuario.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -43,7 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .loginPage("/login")
         .usernameParameter("username")
         .passwordParameter("password")
-        .defaultSuccessUrl("/coches/mis-coches", true) // Especifica la URL de destino
+        .defaultSuccessUrl("/noticias/mis-noticias", true) // Especifica la URL de destino
         .permitAll()
         .and()
         .logout()

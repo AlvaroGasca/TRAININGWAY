@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Lista Coches</title>
+    <title>Lista Noticias</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
@@ -55,12 +55,12 @@
     </nav>
 
     <center>
-        <h1>Mis Coches</h1>
+        <h1>Mis Noticias</h1>
         <h2 th:text="${usuario.username}"></h2>
     </center>
 
 <div class="container mt-3">
-        <input type="text" class="form-control" id="searchInput" placeholder="Buscar por marca, modelo, año o matrícula">
+        <input type="text" class="form-control" id="searchInput" placeholder="Buscar por deporte, título, fecha o cuerpo">
     </div>
 
 <div class="container mt-3">
@@ -70,42 +70,40 @@
     <table class="table table-striped table-hover">
         <thead>
             <tr>
-                <th>Marca</th>
-                <th>Modelo</th>
-                <th>Año</th>
-                <th>Matrícula</th>
+                <th>Deporte</th>
+                <th>Título</th>
+                <th>Fecha</th>
+                <th>Cuerpo</th>
                 <th>Acciones</th>
             </tr>
         </thead>
         <tbody class="table-group-divider">
-            <tr th:each="coche : ${coches}">
-                <td th:text="${coche.marca}"></td>
-                <td th:text="${coche.modelo}"></td>
-                <td th:text="${coche.annos}"></td>
-                <td th:text="${coche.matricula}"></td>
+            <tr th:each="noticia : ${noticias}">
+                <td th:text="${noticia.deporte}"></td>
+                <td th:text="${noticia.titulo}"></td>
+                <td th:text="${noticia.fecha}"></td>
+                <td th:text="${noticia.cuerpo}"></td>
                 <td>
-                    <a class="btn btn-primary" th:href="@{/coches/modificar/{id}(id=${coche.id})}">Editar</a>
-                    <button type="button" class="btn btn-danger" th:attr="onclick=|eliminarCoche('${coche.id}')|">Borrar</button>
+                    <a class="btn btn-primary" th:href="@{/noticias/modificar/{id}(id=${noticia.id})}">Editar</a>
+                    <button type="button" class="btn btn-danger" th:attr="onclick=|eliminarNoticia('${noticia.id}')|">Borrar</button>
                 </td>
             </tr>
         </tbody>
     </table>
 
     <br/>
-    <a th:href="@{/coches/formularioCoche}">Agregar Coche</a>
+    <a th:href="@{/noticias/formularioNoticia}">Agregar Noticia</a>
 
     <script>
-    function editarCoche(id) {
-         window.location.href = '/coches/modificar/' + id;
-        console.log('Editar coche con id:', id);
-    }
-
-    function eliminarCoche(id) {
-        if (confirm('¿Estás seguro de que deseas eliminar este coche con id ' + id + '?')) {
-             window.location.href = '/coches/eliminar/' + id;
-            console.log('Eliminar coche con id:', id);
+        function editarNoticia(id) {
+             window.location.href = '/noticias/modificar/' + id;
         }
-    }
+
+        function eliminarNoticia(id) {
+            if (confirm('¿Estás seguro de que deseas eliminar esta noticia con id ' + id + '?')) {
+                 window.location.href = '/noticias/eliminar/' + id;
+            }
+        }
      document.getElementById("searchInput").addEventListener("input", function () {
         var input, filter, table, tr, td, i, txtValue;
         input = document.getElementById("searchInput");

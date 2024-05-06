@@ -2,15 +2,17 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
-package com.usuariosCoches.usuario;
+package com.app;
 
-import com.usuariosCoches.usuario.Usuario;
+import com.app.usuario.Usuario;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  *
  * @author alvarogasca
  */
-public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
-    Usuario findByUsername (String username);
+public interface NoticiasRepository extends JpaRepository<Noticia, Long> {
+    List<Noticia> findByUsuario(Usuario usuario);
+
 }

@@ -2,10 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.usuariosCoches;
+package com.app;
 
-import com.usuariosCoches.usuario.UsuarioService;
-import com.usuariosCoches.usuario.Usuario;
+import com.app.usuario.UsuarioService;
+import com.app.usuario.Usuario;
 import java.util.List;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,32 +16,32 @@ import org.springframework.stereotype.Service;
  * @author alvarogasca
  */
 @Service
-public class CocheService {
+public class NoticiaService {
 
     @Autowired
-    private CochesRepository cocheRepository;
+    private NoticiasRepository noticiaRepository;
     @Autowired
     private UsuarioService usuarioService; 
 
-    public List<Coche> obtenerCochesPorUsuario(Usuario usuario) {
-        return cocheRepository.findByUsuario(usuario);
+    public List<Noticia> obtenerNoticiasPorUsuario(Usuario usuario) {
+        return noticiaRepository.findByUsuario(usuario);
     }
 
     
     @Transactional
-    public void guardarCoche(Coche coche, Long idUsuario) {
+    public void guardarNoticia(Noticia noticia, Long idUsuario) {
     Usuario usuario = usuarioService.obtenerUsuarioPorId(idUsuario);
-    coche.setUsuario(usuario);
-    cocheRepository.save(coche);
+    noticia.setUsuario(usuario);
+    noticiaRepository.save(noticia);
 }
     
-    public Coche obtenerCochePorId(Long id) {
-        return cocheRepository.findById(id).orElse(null);
+    public Noticia obtenerNoticiaPorId(Long id) {
+        return noticiaRepository.findById(id).orElse(null);
     }
 
     @Transactional
-    public void eliminarCoche(Long id) {
-        cocheRepository.deleteById(id);
+    public void eliminarNoticia(Long id) {
+        noticiaRepository.deleteById(id);
     }
 
 }

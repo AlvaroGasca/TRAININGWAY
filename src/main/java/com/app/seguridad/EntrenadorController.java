@@ -2,10 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.usuariosCoches.seguridad;
+package com.app.seguridad;
 
-import com.usuariosCoches.usuario.Usuario;
-import com.usuariosCoches.usuario.UsuarioService;
+import com.app.usuario.Usuario;
+import com.app.usuario.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,7 +34,7 @@ public class EntrenadorController {
         model.addAttribute("usuario", usuario);
         return "convertirEntrenador";
     } else {
-        return "redirect:/coches/mis-coches";
+        return "redirect:/noticias/mis-noticias";
     }
 }
     @PostMapping("/{id}")
@@ -48,7 +48,7 @@ public String convertirEntrenador(@PathVariable Long id, @ModelAttribute("usuari
         // Guardar el usuario actualizado en la base de datos
         usuarioService.guardarUsuario(usuarioExistente);
     }
-    return "redirect:/coches/mis-coches";
+    return "redirect:/noticias/mis-noticias";
 }
 
 

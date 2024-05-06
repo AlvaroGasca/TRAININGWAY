@@ -2,9 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.usuariosCoches.usuario;
+package com.app.usuario;
 
-import com.usuariosCoches.Coche;
+import com.app.Noticia;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -61,6 +61,6 @@ public class Usuario implements Serializable {
     private String password;
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
-    private List<Coche> coches = new ArrayList<>();
+    private List<Noticia> noticias = new ArrayList<>();
 
 }

@@ -2,9 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.usuariosCoches;
-import com.usuariosCoches.usuario.Usuario;
+package com.app;
+import com.app.usuario.Usuario;
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.Date;
 import javax.persistence. Column; 
 import javax.persistence.Entity;
 import javax.persistence. GeneratedValue; 
@@ -13,9 +15,11 @@ import javax.persistence. Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
 import lombok.AllArgsConstructor;
 import lombok. Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -25,21 +29,22 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "coches")
-public class Coche implements Serializable {
+@Table(name = "noticias")
+public class Noticia implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String marca;
-    @Column(name = "modelo")
-    private String modelo;
+    private String deporte;
+    @Column(name = "titulo")
+    private String titulo;
 
-    @Column(name = "annos")
-    private Integer annos;
+    @Column(name = "fecha")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate fecha = LocalDate.now();
 
-    @Column(name = "matricula")
-    private String matricula;
+    @Column(name = "cuerpo")
+    private String cuerpo;
 
     @ManyToOne
     @JoinColumn(name = "usuario_id")

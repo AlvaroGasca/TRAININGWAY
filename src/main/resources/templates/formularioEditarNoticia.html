@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Modificar Coche</title>
+    <title>Modificar Noticia</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
@@ -10,7 +10,7 @@
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">Modificar Coche</a>
+            <a class="navbar-brand" href="#">Modificar Noticia</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -25,26 +25,26 @@
     </nav>
 
     <div class="container mt-5">
-        <h1>Modificar Coche</h1>
+        <h1>Modificar Noticia</h1>
         
-        <!-- Formulario para modificar el coche -->
-        <form method="post" th:action="@{/coches/modificar/{id}(id=${coche.id})}">
-    <!-- Agrega aquí los campos del coche con sus valores actuales -->
+        <!-- Formulario para modificar  -->
+        <form method="post" th:action="@{/noticias/modificar/{id}(id=${noticia.id})}">
+    <!-- Agrega aquí los campos con sus valores actuales -->
     <div class="mb-3">
-        <label for="marca" class="form-label">Marca:</label>
-        <input type="text" class="form-control" id="marca" name="marca" th:value="${coche.marca}">
+        <label for="deporte" class="form-label">Deporte:</label>
+        <input type="text" class="form-control" id="deporte" name="deporte" th:value="${noticia.deporte}">
     </div>
     <div class="mb-3">
-        <label for="modelo" class="form-label">Modelo:</label>
-        <input type="text" class="form-control" id="modelo" name="modelo" th:value="${coche.modelo}">
+        <label for="titulo" class="form-label">Título:</label>
+        <input type="text" class="form-control" id="titulo" name="titulo" th:value="${noticia.titulo}">
     </div>
     <div class="mb-3">
-        <label for="annos" class="form-label">Año:</label>
-        <input type="text" class="form-control" id="annos" name="annos" th:value="${coche.annos}">
+        <label for="fecha" class="form-label">Fecha:</label>
+        <input type="date" class="form-control" id="fecha" name="fecha" th:value="${noticia.fecha}">
     </div>
     <div class="mb-3">
-        <label for="matricula" class="form-label">Matrícula:</label>
-        <input type="text" class="form-control" id="matricula" name="matricula" th:value="${coche.matricula}">
+        <label for="cuerpo" class="form-label">Cuerpo:</label>
+        <input type="text" class="form-control" id="cuerpo" name="cuerpo" th:value="${noticia.cuerpo}">
     </div>
     
     <button type="submit" class="btn btn-primary">Guardar Cambios</button>
