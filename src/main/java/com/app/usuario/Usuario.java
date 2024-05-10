@@ -4,7 +4,7 @@
  */
 package com.app.usuario;
 
-import com.app.Noticia;
+import com.app.noticia.Noticia;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;

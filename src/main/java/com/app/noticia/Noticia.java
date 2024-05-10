@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.app;
+package com.app.noticia;
 import com.app.usuario.Usuario;
 import java.io.Serializable;
 import java.time.LocalDate;
