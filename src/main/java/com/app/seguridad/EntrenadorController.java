@@ -38,7 +38,7 @@ public class EntrenadorController {
     }
 }
     @PostMapping("/{id}")
-public String convertirEntrenador(@PathVariable Long id, @ModelAttribute("usuario") Usuario usuario) {
+public String convertirEntrenador(@PathVariable Long id, Usuario usuario) {
     // Obtener el usuario existente por su ID
     Usuario usuarioExistente = usuarioService.obtenerUsuarioPorId(id);
     if (usuarioExistente != null) {

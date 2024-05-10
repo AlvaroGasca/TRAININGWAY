@@ -19,7 +19,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 /**
  *
- * @author elvbr
+ * @author alvarogasca
  */
 @Configuration
 @EnableWebSecurity

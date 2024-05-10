@@ -35,32 +35,6 @@
             '<input type="text" class="form-control" name="especialidad">';
         nuevasEspecialidadesDiv.appendChild(nuevoCampoEspecialidad);
     }
-
-    document.getElementById("formularioEntrenador").addEventListener("submit", function(event) {
-        event.preventDefault(); // Evitar el envío del formulario
-
-        // Obtener los datos del formulario
-        var formulario = event.target;
-        var especialidades = [];
-        var inputsEspecialidad = formulario.querySelectorAll("input[name='especialidad']");
-        inputsEspecialidad.forEach(function(input) {
-            if (input.value.trim() !== "") {
-                especialidades.push(input.value.trim());
-            }
-        });
-
-        // Simular el envío de los datos a la base de datos
-        console.log("Especialidades a enviar:", especialidades);
-
-        // Mostrar el mensaje de éxito
-        var mensajeExito = document.getElementById("mensajeExito");
-        mensajeExito.style.display = "block";
-
-        // Redirigir después de 3 segundos
-        setTimeout(function() {
-            window.location.href = "/noticias/mis-noticias";
-        }, 3000);
-    });
 </script>
 
 </body>

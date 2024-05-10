@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 /**
  *
- * @author elvbr
+ * @author alvarogasca
  */
 @Controller
 public class LoginController {
