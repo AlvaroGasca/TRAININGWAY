@@ -11,6 +11,8 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -48,13 +50,14 @@ public class Usuario implements Serializable {
     private String correo;
 
     @Column(name = "telefono", unique = true)
-    private String telefono;
+    private int telefono;
 
     @Column(name = "ubicacion")
     private String ubicacion;
     
+    @Enumerated(EnumType.STRING) // Especifica el tipo de enumeración
     @Column(name = "especialidad")
-    private String especialidad;
+    private Especialidad especialidad;
 
     @Column(unique = true)
     private String username;

@@ -18,8 +18,8 @@ import org.springframework.stereotype.Service;
 
 /**
  *
- * @author alvarogasca
-// */
+ * @author alvarogasca //
+ */
 @Service
 public class UsuarioService implements UserDetailsService {
 
@@ -46,8 +46,7 @@ public class UsuarioService implements UserDetailsService {
     }
 
     // Otros métodos del servicio según tus necesidades
-
-   public List<Usuario> obtenerTodosLosUsuarios() {
+    public List<Usuario> obtenerTodosLosUsuarios() {
         // Lógica para obtener todos los usuarios, por ejemplo, desde un repositorio
         // Reemplaza esto con la lógica de tu aplicación
         return usuarioRepository.findAll();
@@ -57,12 +56,12 @@ public class UsuarioService implements UserDetailsService {
         return usuarioRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado con ID: " + id));
     }
-    
-    public void actualizarEspecialidad(Long usuarioId, String especialidad) {
-    Usuario usuario = usuarioRepository.findById(usuarioId)
-            .orElseThrow(() -> new RuntimeException("Usuario no encontrado con ID: " + usuarioId));
-    usuario.setEspecialidad(especialidad);
-    usuarioRepository.save(usuario);
-}
+
+    public void actualizarEspecialidad(Long usuarioId, Especialidad especialidad) {
+        Usuario usuario = usuarioRepository.findById(usuarioId)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado con ID: " + usuarioId));
+        usuario.setEspecialidad(especialidad);
+        usuarioRepository.save(usuario);
+    }
 
 }

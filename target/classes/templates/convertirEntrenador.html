@@ -16,7 +16,12 @@
     <form id="formularioEntrenador" th:action="@{/convertirEntrenador/{id}(id=${usuario.id})}" method="post">
         <div class="mb-3">
             <label for="especialidad" class="form-label">Especialidad:</label>
-            <input type="text" class="form-control" id="especialidad" name="especialidad" th:value="${usuario.especialidad}">
+            <!-- Utilizamos un campo select para elegir la especialidad -->
+            <select class="form-select" id="especialidad" name="especialidad">
+                <!-- Iteramos sobre los valores del enum Especialidad -->
+                <option th:each="esp : ${T(com.app.usuario.Especialidad).values()}"
+                        th:value="${esp}" th:text="${esp}"></option>
+            </select>
         </div>
         <div id="nuevasEspecialidades">
             <!-- Aquí se agregarán los campos de las nuevas especialidades -->
