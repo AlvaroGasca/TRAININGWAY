@@ -6,6 +6,7 @@ package com.app.noticia;
 
 import com.app.usuario.UsuarioService;
 import com.app.usuario.Usuario;
+import java.time.LocalDateTime;
 import java.util.List;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,7 @@ public class NoticiaService {
     public void guardarNoticia(Noticia noticia, Long idUsuario) {
     Usuario usuario = usuarioService.obtenerUsuarioPorId(idUsuario);
     noticia.setUsuario(usuario);
+    noticia.setFecha(LocalDateTime.now());
     noticiaRepository.save(noticia);
 }
     
@@ -42,6 +44,10 @@ public class NoticiaService {
     @Transactional
     public void eliminarNoticia(Long id) {
         noticiaRepository.deleteById(id);
+    }
+    
+    public List<Noticia> obtenerTodasLasNoticiasOrdenadasPorFecha() {
+        return noticiaRepository.findAllOrderByFechaDesc();
     }
 
 }

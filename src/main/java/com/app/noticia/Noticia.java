@@ -6,6 +6,7 @@ package com.app.noticia;
 import com.app.usuario.Usuario;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import javax.persistence. Column; 
 import javax.persistence.Entity;
@@ -40,8 +41,8 @@ public class Noticia implements Serializable {
     private String titulo;
 
     @Column(name = "fecha")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate fecha = LocalDate.now();
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    private LocalDateTime fecha = LocalDateTime.now();
 
     @Column(name = "cuerpo")
     private String cuerpo;

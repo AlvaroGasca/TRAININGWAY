@@ -7,6 +7,7 @@ package com.app.noticia;
 import com.app.usuario.Usuario;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 /**
  *
@@ -14,5 +15,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface NoticiasRepository extends JpaRepository<Noticia, Long> {
     List<Noticia> findByUsuario(Usuario usuario);
+    
+    @Query("SELECT n FROM Noticia n ORDER BY n.fecha DESC")
+    List<Noticia> findAllOrderByFechaDesc();
 
 }

@@ -42,6 +42,13 @@ public class NoticiasController {
         model.addAttribute("noticias", noticias);
         return "listaNoticias";
     }
+    
+    @GetMapping("/todas")
+    public String listarTodasLasNoticias(Model model) {
+        List<Noticia> noticias = noticiaService.obtenerTodasLasNoticiasOrdenadasPorFecha();
+        model.addAttribute("noticias", noticias);
+        return "listaTodasNoticias";
+    }
   
     @GetMapping("/formularioNoticia")
     public String mostrarFormularioNoticia(Model model, Authentication authentication) {
