@@ -60,8 +60,11 @@
     <h1>Formulario de Noticia</h1>
     <form th:action="@{/noticias/guardar}" th:object="${noticia}" method="post">
         <div class="mb-3">
-            <label for="deporte" class="form-label">Deporte:</label>
-            <input type="text" id="deporte" name="deporte" th:field="*{deporte}" class="form-control" required>
+            <label for="especialidad">Especialidad:</label>
+                            <select id="especialidad" name="especialidad" class="form-select">
+                                <option th:each="especialidad : ${T(com.app.usuario.Especialidad).values()}"
+                                        th:value="${especialidad}" th:text="${especialidad}"></option>
+                            </select>
         </div>
         <div class="mb-3">
             <label for="titulo" class="form-label">Título:</label>

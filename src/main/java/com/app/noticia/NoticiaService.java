@@ -22,21 +22,22 @@ public class NoticiaService {
     @Autowired
     private NoticiasRepository noticiaRepository;
     @Autowired
-    private UsuarioService usuarioService; 
+    private UsuarioService usuarioService;
 
     public List<Noticia> obtenerNoticiasPorUsuario(Usuario usuario) {
         return noticiaRepository.findByUsuario(usuario);
     }
 
-    
     @Transactional
     public void guardarNoticia(Noticia noticia, Long idUsuario) {
-    Usuario usuario = usuarioService.obtenerUsuarioPorId(idUsuario);
-    noticia.setUsuario(usuario);
-    noticia.setFecha(LocalDateTime.now());
-    noticiaRepository.save(noticia);
-}
-    
+        Usuario usuario = usuarioService.obtenerUsuarioPorId(idUsuario);
+        noticia.setUsuario(usuario);
+        noticia.setFecha(LocalDateTime.now());
+        noticia.setMeGusta(0);
+        noticia.setNoMeGusta(0);
+        noticiaRepository.save(noticia);
+    }
+
     public Noticia obtenerNoticiaPorId(Long id) {
         return noticiaRepository.findById(id).orElse(null);
     }
@@ -45,9 +46,45 @@ public class NoticiaService {
     public void eliminarNoticia(Long id) {
         noticiaRepository.deleteById(id);
     }
-    
+
     public List<Noticia> obtenerTodasLasNoticiasOrdenadasPorFecha() {
         return noticiaRepository.findAllOrderByFechaDesc();
+    }
+
+    @Transactional
+    public void incrementarMeGusta(Long idNoticia) {
+        Noticia noticia = noticiaRepository.findById(idNoticia).orElse(null);
+        if (noticia != null) {
+            noticia.setMeGusta(noticia.getMeGusta() + 1);
+            noticiaRepository.save(noticia);
+        }
+    }
+
+    @Transactional
+    public void incrementarNoMeGusta(Long idNoticia) {
+        Noticia noticia = noticiaRepository.findById(idNoticia).orElse(null);
+        if (noticia != null) {
+            noticia.setNoMeGusta(noticia.getNoMeGusta() + 1);
+            noticiaRepository.save(noticia);
+        }
+    }
+
+    @Transactional
+    public void decrementarMeGusta(Long idNoticia) {
+        Noticia noticia = noticiaRepository.findById(idNoticia).orElse(null);
+        if (noticia != null && noticia.getMeGusta() > 0) {
+            noticia.setMeGusta(noticia.getMeGusta() - 1);
+            noticiaRepository.save(noticia);
+        }
+    }
+
+    @Transactional
+    public void decrementarNoMeGusta(Long idNoticia) {
+        Noticia noticia = noticiaRepository.findById(idNoticia).orElse(null);
+        if (noticia != null && noticia.getNoMeGusta() > 0) {
+            noticia.setNoMeGusta(noticia.getNoMeGusta() - 1);
+            noticiaRepository.save(noticia);
+        }
     }
 
 }

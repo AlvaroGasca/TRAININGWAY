@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.app.noticia;
+import com.app.usuario.Especialidad;
 import com.app.usuario.Usuario;
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -10,6 +11,8 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import javax.persistence. Column; 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence. GeneratedValue; 
 import javax.persistence. GenerationType;
 import javax.persistence. Id;
@@ -36,7 +39,11 @@ public class Noticia implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String deporte;
+    
+    @Enumerated(EnumType.STRING) // Especifica el tipo de enumeración
+    @Column(name = "especialidad")
+    private Especialidad especialidad;
+    
     @Column(name = "titulo")
     private String titulo;
 
@@ -50,6 +57,12 @@ public class Noticia implements Serializable {
     @ManyToOne
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
+    
+    @Column(name = "me_gusta")
+    private Integer meGusta;
+
+    @Column(name = "no_me_gusta")
+    private Integer noMeGusta;
     
     
 }

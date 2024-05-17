@@ -82,7 +82,7 @@ public class NoticiasController {
     public String modificarNoticiaSubmit(@PathVariable Long id, @ModelAttribute("noticia") Noticia noticia) {
     Noticia noticiaExistente = noticiaService.obtenerNoticiaPorId(id);
     if (noticiaExistente != null) {
-        noticiaExistente.setDeporte(noticia.getDeporte());
+        noticiaExistente.setEspecialidad(noticia.getEspecialidad());
         noticiaExistente.setTitulo(noticia.getTitulo());
         noticiaExistente.setFecha(noticia.getFecha());
         noticiaExistente.setCuerpo(noticia.getCuerpo()); 
