@@ -60,9 +60,5 @@ public class Noticia implements Serializable {
     
     @Column(name = "me_gusta")
     private Integer meGusta;
-
-    @Column(name = "no_me_gusta")
-    private Integer noMeGusta;
-    
-    
+        
 }

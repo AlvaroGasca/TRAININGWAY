@@ -99,6 +99,22 @@ public class NoticiasController {
         noticiaService.eliminarNoticia(id);
         return "redirect:/noticias/mis-noticias";
     }
+    
+    @PostMapping("/like/{id}")
+    public String likeNoticia(@PathVariable Long id, Principal principal) {
+        String username = principal.getName();
+        Usuario usuario = usuarioService.obtenerUsuarioPorUsername(username);
+        noticiaService.incrementarMeGusta(id, usuario.getId());
+        return "redirect:/noticias/todas";
+    }
+
+    @PostMapping("/dislike/{id}")
+    public String dislikeNoticia(@PathVariable Long id, Principal principal) {
+        String username = principal.getName();
+        Usuario usuario = usuarioService.obtenerUsuarioPorUsername(username);
+        noticiaService.decrementarMeGusta(id, usuario.getId());
+        return "redirect:/noticias/todas";
+    }
 
 }
 

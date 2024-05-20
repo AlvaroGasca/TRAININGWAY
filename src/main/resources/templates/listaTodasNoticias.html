@@ -5,9 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Todas las Noticias</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
-</head>
-<style>
-    .pagination {
+    <style>
+        .pagination {
             text-align: center;
             margin-top: 20px;
         }
@@ -36,7 +35,8 @@
         .pageSizeSelector {
             text-align: center;
         }
-</style>
+    </style>
+</head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
@@ -56,34 +56,35 @@
     <div class="container mt-3">
         <input type="text" class="form-control" id="searchInput" placeholder="Buscar por deporte, título, fecha o cuerpo">
     </div>
-<div class="container mt-5">
-    <h2>Todas las Noticias</h2>
-    <div class="row">
-        <div th:each="noticia : ${noticias}" class="col-md-4">
-            <div class="card mb-4">
-                <img th:src="@{/assets/default-news.jpg}" class="card-img-top" alt="Imagen de Noticia">
-                <div class="card-body">
-                    <h5 class="card-title" th:text="${noticia.titulo}">Título de la Noticia</h5>
-                    <p class="card-text" th:text="${noticia.cuerpo}">Contexto breve de la noticia...</p>
-                    <p class="card-text"><small class="text-muted" th:text="${noticia.fecha}">Fecha de la noticia</small></p>
-                    <p class="card-text"><small class="text-muted" th:text="${'Creado por: ' + noticia.usuario.nombre}">Creado por: Usuario</small></p>
-                    
-                    <div class="btn-group" role="group" aria-label="Me gusta / No me gusta">
-                        <button type="button" class="btn btn-success" th:onclick="'addLike(' + ${noticia.id} + ')'" title="Me gusta">
-                            <i class="bi bi-hand-thumbs-up"></i> Me gusta
-                        </button>
+    <div class="container mt-5">
+        <h2>Todas las Noticias</h2>
+        <div class="row">
+            <div th:each="noticia : ${noticias}" class="col-md-4">
+                <div class="card mb-4">
+                    <img th:src="@{/assets/default-news.jpg}" class="card-img-top" alt="Imagen de Noticia">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${noticia.titulo}">Título de la Noticia</h5>
+                        <p class="card-text" th:text="${noticia.cuerpo}">Contexto breve de la noticia...</p>
+                        <p class="card-text"><small class="text-muted" th:text="${noticia.fecha}">Fecha de la noticia</small></p>
+                        <p class="card-text"><small class="text-muted" th:text="${'Creado por: ' + noticia.usuario.nombre}">Creado por: Usuario</small></p>
+
+                        <form th:action="@{like/{id}(id=${noticia.id})}" method="post">
+                            <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+                            <button type="submit" class="btn btn-success" title="Me gusta">
+                                <i class="bi bi-hand-thumbs-up"></i> Me gusta
+                            </button>
+                        </form>
+
+                        <!-- Contador de Me gusta  -->
+                        <p class="card-text mt-2">
+                            <small class="text-muted">Me gusta: <span th:text="${noticia.meGusta}">0</span></small>
+                        </p>
                     </div>
-                    
-                    <!-- Contador de Me gusta y No me gusta -->
-                    <p class="card-text mt-2">
-                        <small class="text-muted">Me gusta: <span th:text="${noticia.meGusta}">0</span></small>
-                    </p>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
 </body>
 </html>

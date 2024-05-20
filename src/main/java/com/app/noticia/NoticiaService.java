@@ -4,6 +4,7 @@
  */
 package com.app.noticia;
 
+import com.app.like.MeGusta;
 import com.app.usuario.UsuarioService;
 import com.app.usuario.Usuario;
 import java.time.LocalDateTime;
@@ -11,6 +12,7 @@ import java.util.List;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.app.like.MeGustaRepository;
 
 /**
  *
@@ -23,6 +25,8 @@ public class NoticiaService {
     private NoticiasRepository noticiaRepository;
     @Autowired
     private UsuarioService usuarioService;
+    @Autowired
+    private MeGustaRepository likeRepository;
 
     public List<Noticia> obtenerNoticiasPorUsuario(Usuario usuario) {
         return noticiaRepository.findByUsuario(usuario);
@@ -34,7 +38,6 @@ public class NoticiaService {
         noticia.setUsuario(usuario);
         noticia.setFecha(LocalDateTime.now());
         noticia.setMeGusta(0);
-        noticia.setNoMeGusta(0);
         noticiaRepository.save(noticia);
     }
 
@@ -52,39 +55,36 @@ public class NoticiaService {
     }
 
     @Transactional
-    public void incrementarMeGusta(Long idNoticia) {
+    public void incrementarMeGusta(Long idNoticia, Long idUsuario) {
         Noticia noticia = noticiaRepository.findById(idNoticia).orElse(null);
-        if (noticia != null) {
-            noticia.setMeGusta(noticia.getMeGusta() + 1);
-            noticiaRepository.save(noticia);
+        Usuario usuario = usuarioService.obtenerUsuarioPorId(idUsuario);
+
+        if (noticia != null && usuario != null) {
+            if (!likeRepository.existsByUsuarioAndNoticia(usuario, noticia)) {
+                noticia.setMeGusta(noticia.getMeGusta() + 1);
+                noticiaRepository.save(noticia);
+
+                MeGusta like = new MeGusta();
+                like.setUsuario(usuario);
+                like.setNoticia(noticia);
+                likeRepository.save(like);
+            }
         }
     }
 
     @Transactional
-    public void incrementarNoMeGusta(Long idNoticia) {
+    public void decrementarMeGusta(Long idNoticia, Long idUsuario) {
         Noticia noticia = noticiaRepository.findById(idNoticia).orElse(null);
-        if (noticia != null) {
-            noticia.setNoMeGusta(noticia.getNoMeGusta() + 1);
-            noticiaRepository.save(noticia);
+        Usuario usuario = usuarioService.obtenerUsuarioPorId(idUsuario);
+
+        if (noticia != null && usuario != null) {
+            if (likeRepository.existsByUsuarioAndNoticia(usuario, noticia)) {
+                noticia.setMeGusta(noticia.getMeGusta() - 1);
+                noticiaRepository.save(noticia);
+                likeRepository.deleteByUsuarioAndNoticia(usuario, noticia);
+            }
         }
     }
 
-    @Transactional
-    public void decrementarMeGusta(Long idNoticia) {
-        Noticia noticia = noticiaRepository.findById(idNoticia).orElse(null);
-        if (noticia != null && noticia.getMeGusta() > 0) {
-            noticia.setMeGusta(noticia.getMeGusta() - 1);
-            noticiaRepository.save(noticia);
-        }
-    }
-
-    @Transactional
-    public void decrementarNoMeGusta(Long idNoticia) {
-        Noticia noticia = noticiaRepository.findById(idNoticia).orElse(null);
-        if (noticia != null && noticia.getNoMeGusta() > 0) {
-            noticia.setNoMeGusta(noticia.getNoMeGusta() - 1);
-            noticiaRepository.save(noticia);
-        }
-    }
 
 }
