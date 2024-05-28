@@ -4,6 +4,7 @@
  */
 package com.app.like;
 
+import com.app.evento.Evento;
 import com.app.noticia.Noticia;
 import com.app.usuario.Usuario;
 import javax.persistence.Entity;
@@ -34,6 +35,18 @@ public class MeGusta {
     @ManyToOne
     @JoinColumn(name = "noticia_id")
     private Noticia noticia;
+    
+    @ManyToOne
+    @JoinColumn(name = "evento_id")
+    private Evento evento;
+
+    public Evento getEvento() {
+        return evento;
+    }
+
+    public void setEvento(Evento evento) {
+        this.evento = evento;
+    }
     
     public Long getId() {
         return id;

@@ -4,6 +4,7 @@
  */
 package com.app.like;
 
+import com.app.evento.Evento;
 import com.app.noticia.Noticia;
 import com.app.usuario.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,4 +16,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface MeGustaRepository extends JpaRepository<MeGusta, Long> {
     boolean existsByUsuarioAndNoticia(Usuario usuario, Noticia noticia);
     void deleteByUsuarioAndNoticia(Usuario usuario, Noticia noticia);
+    
+    boolean existsByUsuarioAndEvento(Usuario usuario,Evento evento);
+    void deleteByUsuarioAndEvento(Usuario usuario, Evento evento);
 }

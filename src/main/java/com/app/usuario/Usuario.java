@@ -4,6 +4,7 @@
  */
 package com.app.usuario;
 
+import com.app.evento.Evento;
 import com.app.noticia.Noticia;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -65,5 +66,8 @@ public class Usuario implements Serializable {
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
     private List<Noticia> noticias = new ArrayList<>();
+    
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+    private List<Evento> eventos = new ArrayList<>();
 
 }
