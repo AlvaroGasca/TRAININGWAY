@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Todas las Eventos</title>
+    <title>Todos los Eventos</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
     <style>
         .pagination {
@@ -58,24 +58,25 @@
     </div>
     <div class="container mt-5">
         <h2>Todos los Eventos</h2>
-        <div class="row">
-            <div th:each="evento : ${eventos}" class="col-md-4">
+        <div class="row" id="eventosContainer">
+            <div th:each="evento : ${eventos}" class="col-md-4 evento">
                 <div class="card mb-4">
-                    <img th:src="@{/assets/default-news.jpg}" class="card-img-top" alt="Imagen de Evento">
+                   <!-- <img th:src="@{/assets/default-news.jpg}" class="card-img-top" alt="Imagen de Evento"> -->
                     <div class="card-body">
                         <h5 class="card-title" th:text="${evento.titulo}">Título del Evento</h5>
+                        <p class="card-text"><small class="text-muted" th:text="${evento.especialidad}">Deporte</small></p>
                         <p class="card-text" th:text="${evento.cuerpo}">Contexto breve del evento...</p>
+                        <a th:href="${evento.enlace}" class="card-text" target="_blank" th:text="${evento.enlace}">Enlace del evento...</a>
                         <p class="card-text"><small class="text-muted" th:text="${evento.fecha}">Fecha del evento</small></p>
                         <p class="card-text"><small class="text-muted" th:text="${'Creado por: ' + evento.usuario.nombre}">Creado por: Usuario</small></p>
-
+                        
+                        <!-- Formulario para "Me gusta" -->
                         <form th:action="@{like/{id}(id=${evento.id})}" method="post">
                             <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
                             <button type="submit" class="btn btn-success" title="Me gusta">
                                 <i class="bi bi-hand-thumbs-up"></i> Me gusta
                             </button>
                         </form>
-
-                        <!-- Contador de Me gusta  -->
                         <p class="card-text mt-2">
                             <small class="text-muted">Me gusta: <span th:text="${evento.meGusta}">0</span></small>
                         </p>
@@ -84,6 +85,35 @@
             </div>
         </div>
     </div>
+    <script>
+        document.getElementById("searchInput").addEventListener("input", function () {
+            var input, filter, cards, cardContainer, title, body, date, createdBy, i, txtValue;
+            input = document.getElementById("searchInput");
+            filter = input.value.toUpperCase();
+            cardContainer = document.getElementById("eventosContainer");
+            cards = cardContainer.getElementsByClassName("evento");
+
+            for (i = 0; i < cards.length; i++) {
+                title = cards[i].querySelector(".card-title");
+                body = cards[i].querySelector(".card-text");
+                date = cards[i].querySelector("small.text-muted");
+                createdBy = cards[i].querySelector("small.text-muted:last-child");
+
+                if (title || body || date || createdBy) {
+                    txtValue = title.textContent || title.innerText;
+                    txtValue += " " + body.textContent || body.innerText;
+                    txtValue += " " + date.textContent || date.innerText;
+                    txtValue += " " + createdBy.textContent || createdBy.innerText;
+
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        cards[i].style.display = "";
+                    } else {
+                        cards[i].style.display = "none";
+                    }
+                }       
+            }
+        });
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
 </body>

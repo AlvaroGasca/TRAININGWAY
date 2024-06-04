@@ -4,6 +4,8 @@
  */
 package com.app.evento;
 
+import com.app.contador.Contador;
+import com.app.contador.ContadorRepository;
 import com.app.like.MeGusta;
 import com.app.like.MeGustaRepository;
 import com.app.usuario.Usuario;
@@ -26,6 +28,8 @@ public class EventoService {
     private UsuarioService usuarioService;
     @Autowired
     private MeGustaRepository likeRepository;
+    @Autowired
+    private ContadorRepository contadorRepository;
 
     public List<Evento> obtenerEventosPorUsuario(Usuario usuario) {
         return eventoRepository.findByUsuario(usuario);
@@ -82,6 +86,23 @@ public class EventoService {
                 eventoRepository.save(evento);
                 likeRepository.deleteByUsuarioAndEvento(usuario, evento);
             }
+        }
+    }
+    
+    @Transactional
+    public void incrementarContador(Long idEvento, Long idUsuario) {
+        Evento evento = eventoRepository.findById(idEvento).orElse(null);
+        Usuario usuario = usuarioService.obtenerUsuarioPorId(idUsuario);
+
+        if (evento != null && usuario != null) {
+                evento.setContador(evento.getContador() + 1);
+                eventoRepository.save(evento);
+
+                Contador contador = new Contador();
+                contador.setUsuario(usuario);
+                contador.setEvento(evento);
+                contadorRepository.save(contador);
+            
         }
     }
 }

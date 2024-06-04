@@ -44,11 +44,14 @@ public class Evento {
     private String titulo;
 
     @Column(name = "fecha")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
     private LocalDateTime fecha = LocalDateTime.now();
 
     @Column(name = "cuerpo")
     private String cuerpo;
+    
+    @Column(name = "enlace")
+    private String enlace;
 
     @ManyToOne
     @JoinColumn(name = "usuario_id")
@@ -56,5 +59,8 @@ public class Evento {
     
     @Column(name = "me_gusta")
     private Integer meGusta;
+    
+    @Column(name = "contador")
+    private Integer contador;
         
 }

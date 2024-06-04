@@ -70,6 +70,7 @@
                 <th>Título</th>
                 <th>Fecha</th>
                 <th>Cuerpo</th>
+                <th>Enlace</th>
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -79,6 +80,7 @@
                 <td th:text="${evento.titulo}"></td>
                 <td th:text="${evento.fecha}"></td>
                 <td th:text="${evento.cuerpo}"></td>
+                <td><a th:href="${evento.enlace}" target="_blank" th:text="${evento.enlace}"></a></td>
                 <td>
                     <a class="btn btn-primary" th:href="@{/eventos/modificar/{id}(id=${evento.id})}">Editar</a>
                     <button type="button" class="btn btn-danger" th:attr="onclick=|eliminarEvento('${evento.id}')|">Borrar</button>

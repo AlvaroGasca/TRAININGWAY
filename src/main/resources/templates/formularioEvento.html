@@ -75,6 +75,10 @@
             <label for="cuerpo" class="form-label">Cuerpo:</label>
             <input type="text" id="cuerpo" name="cuerpo" th:field="*{cuerpo}" class="form-control" required>
         </div>
+        <div class="mb-3">
+                <label for="enlace" class="form-label">Enlace:</label>
+                <input type="url" class="form-control" id="enlace" th:field="*{enlace}" required>
+            </div>
         <input type="hidden" name="idUsuario" th:value="${usuario.id}" />
         <button type="submit" class="btn btn-primary">Guardar Evento</button>
     </form>

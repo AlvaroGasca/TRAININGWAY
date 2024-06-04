@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @RequestMapping("/eventos")
 public class EventosController {
+
     @Autowired
     private EventoService eventoService;
 
@@ -41,14 +42,14 @@ public class EventosController {
         model.addAttribute("eventos", eventos);
         return "listaEventos";
     }
-    
+
     @GetMapping("/todos")
     public String listarTodosLosEventos(Model model) {
         List<Evento> eventos = eventoService.obtenerTodosLosEventosOrdenadosPorFecha();
         model.addAttribute("eventos", eventos);
         return "listaTodosEventos";
     }
-  
+
     @GetMapping("/formularioEvento")
     public String mostrarFormularioEvento(Model model, Authentication authentication) {
         String nombreUsuario = authentication.getName();
@@ -58,47 +59,44 @@ public class EventosController {
         return "formularioEvento";
     }
 
-   
     @PostMapping("/guardar")
     public String guardarNoticia(@ModelAttribute("evento") Evento evento, @RequestParam("idUsuario") Long idUsuario) {
-         eventoService.guardarEvento(evento, idUsuario);
-        return "redirect:/eventos/mis-eventos";  
-    }
-    
-    @GetMapping("/modificar/{id}")
-    public String modificarEventoForm(@PathVariable Long id, Model model) {
-    Evento evento = eventoService.obtenerEventoPorId(id);
-    if (evento != null) {
-        model.addAttribute("evento", evento);
-        return "formularioEditarEvento";
-    } else {
+        eventoService.guardarEvento(evento, idUsuario);
         return "redirect:/eventos/mis-eventos";
     }
-}
 
+    @GetMapping("/modificar/{id}")
+    public String modificarEventoForm(@PathVariable Long id, Model model) {
+        Evento evento = eventoService.obtenerEventoPorId(id);
+        if (evento != null) {
+            model.addAttribute("evento", evento);
+            return "formularioEditarEvento";
+        } else {
+            return "redirect:/eventos/mis-eventos";
+        }
+    }
 
     @PostMapping("/modificar/{id}")
     public String modificarEventoSubmit(@PathVariable Long id, @ModelAttribute("evento") Evento evento) {
-    Evento eventoExistente = eventoService.obtenerEventoPorId(id);
-    if (eventoExistente != null) {
-        eventoExistente.setEspecialidad(evento.getEspecialidad());
-        eventoExistente.setTitulo(evento.getTitulo());
-        eventoExistente.setFecha(evento.getFecha());
-        eventoExistente.setCuerpo(evento.getCuerpo()); 
+        Evento eventoExistente = eventoService.obtenerEventoPorId(id);
+        if (eventoExistente != null) {
+            eventoExistente.setEspecialidad(evento.getEspecialidad());
+            eventoExistente.setTitulo(evento.getTitulo());
+            eventoExistente.setFecha(evento.getFecha());
+            eventoExistente.setCuerpo(evento.getCuerpo());
+            eventoExistente.setEnlace(evento.getEnlace());
 
-        eventoService.guardarEvento(eventoExistente, eventoExistente.getUsuario().getId());
+            eventoService.guardarEvento(eventoExistente, eventoExistente.getUsuario().getId());
+        }
+        return "redirect:/eventos/mis-eventos";
     }
-    return "redirect:/eventos/mis-eventos";
-}
-
-
 
     @GetMapping("/eliminar/{id}")
     public String eliminarEvento(@PathVariable Long id) {
         eventoService.eliminarEvento(id);
         return "redirect:/eventos/mis-eventos";
     }
-    
+
     @PostMapping("/like/{id}")
     public String likeNEvento(@PathVariable Long id, Principal principal) {
         String username = principal.getName();
@@ -112,6 +110,14 @@ public class EventosController {
         String username = principal.getName();
         Usuario usuario = usuarioService.obtenerUsuarioPorUsername(username);
         eventoService.decrementarMeGusta(id, usuario.getId());
+        return "redirect:/eventos/todos";
+    }
+    
+    @PostMapping("/contador/{id}")
+    public String contadorNEvento(@PathVariable Long id, Principal principal) {
+        String username = principal.getName();
+        Usuario usuario = usuarioService.obtenerUsuarioPorUsername(username);
+        eventoService.incrementarContador(id, usuario.getId());
         return "redirect:/eventos/todos";
     }
 }
