@@ -5,6 +5,7 @@
 package com.app.contador;
 
 import com.app.evento.Evento;
+import com.app.tienda.Tienda;
 import com.app.usuario.Usuario;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -34,6 +35,18 @@ public class Contador {
     @ManyToOne
     @JoinColumn(name = "evento_id")
     private Evento evento;
+    
+    @ManyToOne
+    @JoinColumn(name = "tienda_id")
+    private Tienda tienda;
+
+    public Tienda getTienda() {
+        return tienda;
+    }
+
+    public void setTienda(Tienda tienda) {
+        this.tienda = tienda;
+    }
 
     public Evento getEvento() {
         return evento;

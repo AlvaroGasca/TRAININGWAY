@@ -5,6 +5,7 @@
 package com.app.contador;
 
 import com.app.evento.Evento;
+import com.app.tienda.Tienda;
 import com.app.usuario.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -15,4 +16,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface ContadorRepository extends JpaRepository<Contador, Long>{
     boolean existsByUsuarioAndEvento(Usuario usuario,Evento evento);
     void deleteByUsuarioAndEvento(Usuario usuario, Evento evento);
+    
+    boolean existsByUsuarioAndTienda(Usuario usuario,Tienda tienda);
+    void deleteByUsuarioAndTienda(Usuario usuario, Tienda Tienda);
 }

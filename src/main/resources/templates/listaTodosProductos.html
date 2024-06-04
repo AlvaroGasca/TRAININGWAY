@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienda</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <style>
+        .pagination {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .pagination li {
+            display: inline-block;
+            margin: 0 5px;
+        }
+        .pagination .page-item a {
+            background-color: #007BFF;
+            color: #fff;
+            padding: 5px 10px;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .pagination .page-item a:hover {
+            background-color: #0056b3;
+        }
+        .pagination .page-item.disabled a {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        .pagination-summary {
+            text-align: center;
+            margin-top: 10px;
+        }
+        .pageSizeSelector {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Lista</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" th:href="@{/}">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container mt-3">
+        <input type="text" class="form-control" id="searchInput" placeholder="Buscar por deporte, título, fecha o cuerpo">
+    </div>
+    <div class="container mt-5">
+        <h2>Tienda</h2>
+        <div class="row" id="tiendaContainer">
+            <div th:each="tienda : ${tienda}" class="col-md-4 tienda">
+                <div class="card mb-4">
+                   <!-- <img th:src="@{/assets/default-news.jpg}" class="card-img-top" alt="Imagen de Evento"> -->
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${tienda.titulo}">Título del Producto</h5>
+                        <p class="card-text"><small class="text-muted" th:text="${tienda.especialidad}">Deporte</small></p>
+                        <p class="card-text" th:text="${tienda.cuerpo}">Contexto breve del producto...</p>
+                        <a th:href="${tienda.enlace}" class="card-text" target="_blank" th:text="${tienda.enlace}">Enlace del producto...</a>
+                        <p class="card-text"><small class="text-muted" th:text="${tienda.fecha}">Fecha del producto</small></p>
+                        <p class="card-text"><small class="text-muted" th:text="${'Creado por: ' + tienda.usuario.nombre}">Creado por: Usuario</small></p>
+                        
+                        <!-- Formulario para "Me gusta" -->
+                        <form th:action="@{like/{id}(id=${tienda.id})}" method="post">
+                            <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+                            <button type="submit" class="btn btn-success" title="Me gusta">
+                                <i class="bi bi-hand-thumbs-up"></i> Me gusta
+                            </button>
+                        </form>
+                        <p class="card-text mt-2">
+                            <small class="text-muted">Me gusta: <span th:text="${tienda.meGusta}">0</span></small>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.getElementById("searchInput").addEventListener("input", function () {
+            var input, filter, cards, cardContainer, title, body, date, createdBy, i, txtValue;
+            input = document.getElementById("searchInput");
+            filter = input.value.toUpperCase();
+            cardContainer = document.getElementById("tiendaContainer");
+            cards = cardContainer.getElementsByClassName("tienda");
+
+            for (i = 0; i < cards.length; i++) {
+                title = cards[i].querySelector(".card-title");
+                body = cards[i].querySelector(".card-text");
+                date = cards[i].querySelector("small.text-muted");
+                createdBy = cards[i].querySelector("small.text-muted:last-child");
+
+                if (title || body || date || createdBy) {
+                    txtValue = title.textContent || title.innerText;
+                    txtValue += " " + body.textContent || body.innerText;
+                    txtValue += " " + date.textContent || date.innerText;
+                    txtValue += " " + createdBy.textContent || createdBy.innerText;
+
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        cards[i].style.display = "";
+                    } else {
+                        cards[i].style.display = "none";
+                    }
+                }       
+            }
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
+</body>
+</html>
