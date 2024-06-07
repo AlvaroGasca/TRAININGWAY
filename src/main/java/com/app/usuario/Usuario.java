@@ -9,19 +9,25 @@ import com.app.noticia.Noticia;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 /**
  *
@@ -69,5 +75,11 @@ public class Usuario implements Serializable {
     
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
     private List<Evento> eventos = new ArrayList<>();
+    
+    @ElementCollection(targetClass = Rol.class)
+    @CollectionTable(name = "usuario_roles", joinColumns = @JoinColumn(name = "usuario_id"))
+    @Enumerated(EnumType.STRING)
+    @Fetch(FetchMode.JOIN)
+    private Set<Rol> roles;
 
 }

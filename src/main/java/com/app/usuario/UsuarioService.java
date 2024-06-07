@@ -7,9 +7,14 @@ package com.app.usuario;
 import com.app.usuario.UsuarioRepository;
 import com.app.usuario.Usuario;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -32,7 +37,10 @@ public class UsuarioService implements UserDetailsService {
         if (usuario == null) {
             throw new UsernameNotFoundException("Usuario no encontrado: " + username);
         }
-        return new org.springframework.security.core.userdetails.User(usuario.getUsername(), usuario.getPassword(), new ArrayList<>());
+         Set<GrantedAuthority> authoritySet = usuario.getRoles()
+                .stream().map(rol -> new SimpleGrantedAuthority(rol.name()))
+                .collect(Collectors.toSet());
+        return new org.springframework.security.core.userdetails.User(usuario.getUsername(), usuario.getPassword(), authoritySet);
     }
 
     public Usuario obtenerUsuarioPorUsername(String username) {
@@ -42,6 +50,9 @@ public class UsuarioService implements UserDetailsService {
     public void guardarUsuario(Usuario usuario) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
+        Set<Rol> roles = new HashSet<>();
+        roles.add(Rol.USER);
+        usuario.setRoles(roles);
         usuarioRepository.save(usuario);
     }
 
@@ -63,5 +74,6 @@ public class UsuarioService implements UserDetailsService {
         usuario.setEspecialidad(especialidad);
         usuarioRepository.save(usuario);
     }
+
 
 }

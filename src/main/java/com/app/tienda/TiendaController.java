@@ -27,7 +27,7 @@ public class TiendaController {
     @Autowired
     private UsuarioService usuarioService;
 
-    @GetMapping("/mis-productos")
+    @GetMapping("/admin/mis-productos")
     public String listarProductosPorUsuario(Model model, Principal principal) {
         String username = principal.getName();
         Usuario usuario = usuarioService.obtenerUsuarioPorUsername(username);

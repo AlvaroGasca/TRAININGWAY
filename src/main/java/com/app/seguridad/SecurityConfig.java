@@ -4,6 +4,7 @@
  */
 package com.app.seguridad;
 
+import com.app.usuario.Rol;
 import com.app.usuario.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -37,6 +38,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
        http.authorizeRequests()
         .antMatchers("/", "/registro").permitAll()
+        .antMatchers("/tienda/admin/**").hasAuthority(String.valueOf(Rol.ADMIN))
         .anyRequest().authenticated()
         .and()
         .formLogin()
