@@ -48,7 +48,7 @@ public class Noticia implements Serializable {
     private String titulo;
 
     @Column(name = "fecha")
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'-'HH:mm:ss")
     private LocalDateTime fecha = LocalDateTime.now();
 
     @Column(name = "cuerpo")
