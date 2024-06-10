@@ -18,5 +18,7 @@ public interface NoticiasRepository extends JpaRepository<Noticia, Long> {
     
     @Query("SELECT n FROM Noticia n ORDER BY n.fecha DESC")
     List<Noticia> findAllOrderByFechaDesc();
+    
+    List<Noticia> findTop4ByOrderByFechaDesc();
 
 }

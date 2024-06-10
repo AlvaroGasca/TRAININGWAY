@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrainingWay</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="icon" th:href="@{/assets/logo.PNG}" type="image/x-icon">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        .navbar {
+            background-color: #001f3f;
+            height: 70px;
+        }
+
+        .navbar-brand img {
+            height: 70px; /* Tamaño grande para el logo */
+            position: relative; /* Para controlar el posicionamiento */
+            transform: translateX(-50%);
+        }
+
+        .card {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-text {
+            font-size: 1rem;
+            color: #6c757d;
+        }
+
+        .search-bar {
+            margin-bottom: 20px;
+        }
+
+        .search-bar input[type="text"] {
+            border-radius: 20px;
+            height: 40px; /* Ajuste para hacer la barra más fina */
+        }
+
+        .news-section {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .news-card {
+            margin-bottom: 20px;
+        }
+
+        .news-card img {
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            max-height: 200px;
+            object-fit: cover;
+        }
+
+        .news-card-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .news-card-text {
+            font-size: 1rem;
+            color: #6c757d;
+        }
+
+        .btn-toggle-dark-mode {
+            cursor: pointer;
+            background-color: #001f3f;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        .btn-toggle-dark-mode:hover {
+            background-color: #001633;
+        }
+
+        .iframe-container {
+            position: relative;
+            overflow: hidden;
+            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .iframe-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #f1f1f1;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Barra de navegación -->
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container d-flex justify-content-center">
+        <ul class="navbar-nav me-auto">
+            <!-- Menú desplegable de opciones -->
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Menú
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenu">
+                    <li><a class="dropdown-item" th:href="@{/noticias/todas}">Noticias</a></li>
+                    <li><a class="dropdown-item" th:href="@{/eventos/todos}">Eventos</a></li>
+                    <li><a class="dropdown-item" th:href="@{/perfil/todos}">Entrenadores</a></li>
+                    <li><a class="dropdown-item" th:href="@{/tienda/todos}">Tienda</a></li>
+                </ul>
+            </li>
+        </ul>
+        <a class="navbar-brand mx-auto" href="#"><img th:src="@{/assets/logo.PNG}" alt="Logo"></a>
+        <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="#">Personas Favoritas</a>
+            </li>
+            <!-- Menú desplegable de ajustes -->
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Ajustes
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" th:href="@{/noticias/mis-noticias}">Mis Noticias</a></li>
+                    <li><a class="dropdown-item" th:href="@{/eventos/mis-eventos}">Mis eventos</a></li>
+                    <li><a class="dropdown-item" th:href="@{/perfil/mi-perfil}">Perfil</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Salir</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<form id="logout-form" action="/logout" method="POST" style="display: none;">
+    <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+</form>
+
+<!-- Barra de búsqueda -->
+<div class="container mt-3 mb-3">
+    <div class="input-group search-bar">
+        <input type="text" class="form-control" placeholder="Buscar...">
+        <button class="btn btn-primary" type="button">Buscar</button>
+    </div>
+</div>
+
+<!-- Sección de tarjetas -->
+<div class="container">
+    <div class="row">
+        <!-- Tarjeta de eventos -->
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <img th:src="@{/assets/evento1.png}" class="card-img-top" alt="Imagen de Eventos">
+                <div class="card-body">
+                    <h5 class="card-title">Eventos</h5>
+                </div>
+            </div>
+        </div>
+        <!-- Tarjeta de entrenadores -->
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <img th:src="@{/assets/entrenador.png}" class="card-img-top" alt="Imagen de Entrenadores">
+                <div class="card-body">
+                    <h5 class="card-title">Entrenadores</h5>
+                </div>
+            </div>
+        </div>
+        <!-- Tarjeta de tienda -->
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <img th:src="@{/assets/tienda.png}" class="card-img-top" alt="Imagen de Tienda">
+                <div class="card-body">
+                    <h5 class="card-title">Tienda</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Sección de noticias -->
+<div class="container mt-5 news-section">
+    <h2>Noticias</h2>
+    <div class="row">
+        <!-- Tarjetas de noticias -->
+        <div th:each="noticia : ${noticias}" class="col-md-3 news-card">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="news-card-title" th:text="${noticia.titulo}">Título de la Noticia</h5>
+                    <p class="news-card-text" th:text="${noticia.cuerpo}">Contexto breve de la noticia...</p>
+                    <p class="news-card-text"><small class="text-muted" th:text="${noticia.fecha}">Fecha de la noticia</small></p>
+                    <p class="news-card-text"><small class="text-muted" th:text="${'Creado por: ' + noticia.usuario.nombre}">Creado por: Usuario</small></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Iframe de Google Maps -->
+<div class="container mt-5">
+    <h2>Parques perfectos para entrenar</h2>
+    <p>Sabemos que entrenar al aire libre es importante, por eso te hemos hecho un mapa con parques con zonas para realizar deporte según tu ubicación.</p>
+    <div class="iframe-container">
+        <iframe src="https://www.google.com/maps/d/embed?mid=1movBw9bMYFDcqmLSpdOoztCpjdlwuNOt&ehbc=2E312F" width="640" height="480"></iframe>
+    </div>
+</div>
+
+<footer>
+    &copy; 2024 TrainingWay Inc. Todos los derechos reservados.
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

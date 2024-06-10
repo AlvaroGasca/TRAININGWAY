@@ -85,6 +85,10 @@ public class NoticiaService {
             }
         }
     }
+    
+    public List<Noticia> obtenerUltimasNoticias() {
+        return noticiaRepository.findTop4ByOrderByFechaDesc();
+    }
 
 
 }

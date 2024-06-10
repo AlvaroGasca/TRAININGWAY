@@ -45,7 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .loginPage("/login")
         .usernameParameter("username")
         .passwordParameter("password")
-        .defaultSuccessUrl("/noticias/mis-noticias", true) // Especifica la URL de destino
+        .defaultSuccessUrl("/trainingway", true) // Especifica la URL de destino
         .permitAll()
         .and()
         .logout()
