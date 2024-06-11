@@ -75,4 +75,9 @@ public class Perfil implements Serializable {
     @Column(name = "cita")
     private List<String> citas;
     
+    @ElementCollection
+    @CollectionTable(name = "dias_disponibles", joinColumns = @JoinColumn(name = "perfil_id"))
+    @Column(name = "dia_disponible")
+    private List<String> diasDisponibles;
+    
 }

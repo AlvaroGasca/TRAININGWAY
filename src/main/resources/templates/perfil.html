@@ -39,6 +39,24 @@
             display: block;
             margin-bottom: 10px;
         }
+
+        .available-days {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .available-day {
+            background-color: #d4edda;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        .unavailable-day {
+            background-color: #f8d7da;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
     </style>
 </head>
 <body>
@@ -62,7 +80,9 @@
         </div>
         <div class="profile-item">
             <label>Disponibilidad:</label>
-            <span th:text="${perfil.disponibilidad}"></span>
+            <div class="available-days">
+                <span th:each="dia : ${perfil.diasDisponibles}" th:text="${dia}"></span>
+            </div>
         </div>
         <div class="profile-item">
             <label>Horario Mañana:</label>
