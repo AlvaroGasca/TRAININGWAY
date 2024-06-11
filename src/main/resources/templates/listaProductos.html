@@ -82,7 +82,7 @@
                 <td th:text="${tienda.cuerpo}"></td>
                 <td><a th:href="${tienda.enlace}" target="_blank" th:text="${tienda.enlace}"></a></td>
                 <td>
-                    <a class="btn btn-primary" th:href="@{/tienda/modificar/{id}(id=${tienda.id})}">Editar</a>
+                    <a class="btn btn-primary" th:href="@{/tienda/admin/modificar/{id}(id=${tienda.id})}">Editar</a>
                     <button type="button" class="btn btn-danger" th:attr="onclick=|eliminarProducto('${tienda.id}')|">Borrar</button>
                 </td>
             </tr>
@@ -90,16 +90,16 @@
     </table>
 
     <br/>
-    <a th:href="@{/tienda/formularioProducto}">Agregar Producto</a>
+    <a th:href="@{/tienda/admin/formularioProducto}">Agregar Producto</a>
 
     <script>
         function editarProducto(id) {
-             window.location.href = '/tienda/modificar/' + id;
+             window.location.href = '/tienda/admin/modificar/' + id;
         }
 
         function eliminarProducto(id) {
             if (confirm('¿Estás seguro de que deseas eliminar este producto con id ' + id + '?')) {
-                 window.location.href = '/tienda/eliminar/' + id;
+                 window.location.href = '/tienda/admin/eliminar/' + id;
             }
         }
      document.getElementById("searchInput").addEventListener("input", function () {

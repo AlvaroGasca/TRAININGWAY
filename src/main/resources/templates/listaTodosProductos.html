@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security5">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -50,6 +51,12 @@
                         <a class="nav-link active" aria-current="page" th:href="@{/}">Logout</a>
                     </li>
                 </ul>
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <!-- Botón visible solo para ADMIN -->
+                    <li class="nav-item" sec:authorize="hasAuthority('ADMIN')">
+                        <a class="nav-link" th:href="@{/tienda/admin/mis-productos}">Lista de Productos</a>
+                    </li>
+                </ul>
             </div>
         </div>
     </nav>
@@ -61,7 +68,6 @@
         <div class="row" id="tiendaContainer">
             <div th:each="tienda : ${tienda}" class="col-md-4 tienda">
                 <div class="card mb-4">
-                   <!-- <img th:src="@{/assets/default-news.jpg}" class="card-img-top" alt="Imagen de Evento"> -->
                     <div class="card-body">
                         <h5 class="card-title" th:text="${tienda.titulo}">Título del Producto</h5>
                         <p class="card-text"><small class="text-muted" th:text="${tienda.especialidad}">Deporte</small></p>

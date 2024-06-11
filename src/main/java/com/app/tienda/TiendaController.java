@@ -44,7 +44,7 @@ public class TiendaController {
         return "listaTodosProductos";
     }
 
-    @GetMapping("/formularioProducto")
+    @GetMapping("/admin/formularioProducto")
     public String mostrarFormularioProducto(Model model, Authentication authentication) {
         String nombreUsuario = authentication.getName();
         Usuario usuario = usuarioService.obtenerUsuarioPorUsername(nombreUsuario);
@@ -53,24 +53,24 @@ public class TiendaController {
         return "formularioProducto";
     }
 
-    @PostMapping("/guardar")
+    @PostMapping("/admin/guardar")
     public String guardarProducto(@ModelAttribute("tienda") Tienda tienda, @RequestParam("idUsuario") Long idUsuario) {
         tiendaService.guardarProducto(tienda, idUsuario);
-        return "redirect:/tienda/mis-productos";
+        return "redirect:/tienda/admin/mis-productos";
     }
 
-    @GetMapping("/modificar/{id}")
+    @GetMapping("/admin/modificar/{id}")
     public String modificarProductoForm(@PathVariable Long id, Model model) {
         Tienda tienda = tiendaService.obtenerProductoPorId(id);
         if (tienda != null) {
             model.addAttribute("tienda", tienda);
             return "formularioEditarProducto";
         } else {
-            return "redirect:/tienda/mis-productos";
+            return "redirect:/tienda/admin/mis-productos";
         }
     }
 
-    @PostMapping("/modificar/{id}")
+    @PostMapping("/admin/modificar/{id}")
     public String modificarProductoSubmit(@PathVariable Long id, @ModelAttribute("tienda") Tienda tienda) {
         Tienda productoExistente = tiendaService.obtenerProductoPorId(id);
         if (productoExistente != null) {
@@ -82,13 +82,13 @@ public class TiendaController {
 
             tiendaService.guardarProducto(productoExistente, productoExistente.getUsuario().getId());
         }
-        return "redirect:/tienda/mis-productos";
+        return "redirect:/tienda/admin/mis-productos";
     }
 
-    @GetMapping("/eliminar/{id}")
+    @GetMapping("/admin/eliminar/{id}")
     public String eliminarProducto(@PathVariable Long id) {
         tiendaService.eliminarProducto(id);
-        return "redirect:/tienda/mis-productos";
+        return "redirect:/tienda/admin/mis-productos";
     }
 
     @PostMapping("/like/{id}")
