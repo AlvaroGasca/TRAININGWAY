@@ -36,13 +36,16 @@ public class PerfilController {
 
     @GetMapping("/mi-perfil")
     public String perfilPorUsuario(Model model, Principal principal) {
-        String username = principal.getName();
-        Usuario usuario = usuarioService.obtenerUsuarioPorUsername(username);
-        Perfil perfil = perfilService.obtenerPerfilPorUsuario(usuario);
-        model.addAttribute("usuario", usuario);
-        model.addAttribute("perfil", perfil);
-        return "perfil";
+    String username = principal.getName();
+    Usuario usuario = usuarioService.obtenerUsuarioPorUsername(username);
+    Perfil perfil = perfilService.obtenerPerfilPorUsuario(usuario);
+    if (perfil == null) {
+        return "redirect:/perfil/formularioPerfil";
     }
+    model.addAttribute("usuario", usuario);
+    model.addAttribute("perfil", perfil);
+    return "perfil";
+}
     
     @GetMapping("/todos")
     public String listarTodosLosPerfiles(Model model) {
@@ -65,28 +68,6 @@ public class PerfilController {
         perfilService.guardarPerfil(perfil, idUsuario);
         return "redirect:/perfil/mi-perfil";  
     }
-    
-    @GetMapping("/modificar/{id}")
-    public String modificarPerfilForm(@PathVariable Long id, Model model) {
-        Perfil perfil = perfilService.obtenerPerfilPorId(id);
-        if (perfil != null) {
-            model.addAttribute("perfil", perfil);
-            return "formularioEditarPerfil";
-        } else {
-            return "redirect:/perfil/mi-perfil";
-        }
-    }
-
-    @PostMapping("/modificar/{id}")
-    public String modificarPerfilSubmit(@PathVariable Long id, @ModelAttribute("perfil") Perfil perfil) {
-        Perfil perfilExistente = perfilService.obtenerPerfilPorId(id);
-        if (perfilExistente != null) {
-            perfilExistente.setDescripcion(perfil.getDescripcion());
-            perfilExistente.setDisponibilidad(perfil.getDisponibilidad());
-            perfilService.guardarPerfil(perfilExistente, perfilExistente.getUsuario().getId());
-        }
-        return "redirect:/perfil/mi-perfil";
-    }
 
     @GetMapping("/ver/{id}")
     public String verPerfil(@PathVariable Long id, Model model) {
@@ -97,6 +78,40 @@ public class PerfilController {
         } else {
             return "redirect:/perfil/mi-perfil";
         }
+    }
+    
+    @GetMapping("/modificar/{id}")
+    public String modificarPerfilForm(@PathVariable Long id, Model model) {
+        Perfil perfil = perfilService.obtenerPerfilPorId(id);
+        if (perfil != null) {
+            model.addAttribute("perfil", perfil);
+            model.addAttribute("usuario", perfil.getUsuario());
+            return "formularioEditarPerfil";
+        } else {
+            return "redirect:/perfil/mi-perfil";
+        }
+    }
+
+    @PostMapping("/modificar/{id}")
+    public String modificarPerfilSubmit(@PathVariable Long id, @ModelAttribute("perfil") Perfil perfil, @RequestParam String correo, @RequestParam String telefono) {
+        Perfil perfilExistente = perfilService.obtenerPerfilPorId(id);
+        if (perfilExistente != null) {
+             Usuario usuario = perfilExistente.getUsuario();
+            usuario.setCorreo(correo);
+            usuario.setTelefono(Integer.parseInt(telefono));
+            perfilExistente.setDescripcion(perfil.getDescripcion());
+            perfilExistente.setDisponibilidad(perfil.getDisponibilidad());
+            perfilExistente.setDiasDisponibles(perfil.getDiasDisponibles());
+            perfilExistente.setHorarioMananaInicio(perfil.getHorarioMananaInicio());
+            perfilExistente.setHorarioMananaFin(perfil.getHorarioMananaFin());
+            perfilExistente.setHorarioTardeInicio(perfil.getHorarioTardeInicio());
+            perfilExistente.setHorarioTardeFin(perfil.getHorarioTardeFin());
+            
+            perfilExistente.setMostrarTelefono(perfil.isMostrarTelefono());
+        perfilExistente.setMostrarCorreo(perfil.isMostrarCorreo());
+            perfilService.guardarPerfil(perfilExistente, perfilExistente.getUsuario().getId());
+        }
+        return "redirect:/perfil/mi-perfil";
     }
 
 

@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  *
@@ -30,8 +31,10 @@ public class RegistroController {
     }
 
     @PostMapping("/registro")
-    public String procesarFormularioRegistro(@ModelAttribute Usuario usuario) {
-        // Puedes agregar lógica de validación aquí
+    public String registrarUsuario(@ModelAttribute Usuario usuario, @RequestParam String tipoUsuario) {
+        if ("usuario".equals(tipoUsuario)) {
+            usuario.setEspecialidad(null);
+        }
         usuarioService.guardarUsuario(usuario);
         return "redirect:/login";
     }

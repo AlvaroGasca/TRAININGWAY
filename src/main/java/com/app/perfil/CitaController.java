@@ -103,5 +103,28 @@ public class CitaController {
 
         return horariosDisponibles;
     }
+    
+    @GetMapping("/mis-citas")
+    public String verCitasUsuario(Model model, Principal principal) {
+    String username = principal.getName();
+    Usuario usuario = usuarioService.obtenerUsuarioPorUsername(username);
+    Perfil perfil = perfilService.obtenerPerfilPorUsuario(usuario);
+    if (perfil == null) {
+        return "redirect:/perfil/formularioPerfil";
+    }
+    model.addAttribute("citas", perfil.getCitas());
+    return "misCitas";
+}
+
+    // Nuevo método para cancelar una cita
+    @PostMapping("/cancelar")
+    public String cancelarCita(@RequestParam("cita") String cita, Principal principal) {
+        String username = principal.getName();
+        Usuario usuario = usuarioService.obtenerUsuarioPorUsername(username);
+        Perfil perfil = perfilService.obtenerPerfilPorUsuario(usuario);
+        perfil.getCitas().remove(cita);
+        perfilService.guardarPerfil(perfil, perfil.getUsuario().getId());
+        return "redirect:/cita/mis-citas";
+    }
 
 }

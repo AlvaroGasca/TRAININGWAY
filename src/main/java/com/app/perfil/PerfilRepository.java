@@ -16,7 +16,8 @@ import org.springframework.data.jpa.repository.Query;
  */
 public interface PerfilRepository extends JpaRepository<Perfil, Long> {
     Perfil findByUsuario(Usuario usuario);
-        
+    
+@Query("SELECT p FROM Perfil p WHERE p.usuario.especialidad IS NOT NULL")    
     List<Perfil> findAll();
 
 }

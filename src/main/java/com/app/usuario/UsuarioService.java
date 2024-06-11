@@ -53,6 +53,9 @@ public class UsuarioService implements UserDetailsService {
         Set<Rol> roles = new HashSet<>();
         roles.add(Rol.USER);
         usuario.setRoles(roles);
+        if (usuario.getEspecialidad() == null) {
+            usuario.setEspecialidad(null);  // Asegúrate de que se guarda como null si no se proporciona
+        }
         usuarioRepository.save(usuario);
     }
 

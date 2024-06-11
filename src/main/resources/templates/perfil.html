@@ -78,27 +78,34 @@
             <label>Correo:</label>
             <span th:text="${perfil.usuario.correo}"></span>
         </div>
-        <div class="profile-item">
-            <label>Disponibilidad:</label>
-            <div class="available-days">
-                <span th:each="dia : ${perfil.diasDisponibles}" th:text="${dia}"></span>
+        
+        <!-- Condición para mostrar el resto de la información solo si el usuario tiene especialidad -->
+        <div th:if="${perfil.usuario.especialidad != null}">
+            <div class="profile-item">
+                <label>Disponibilidad:</label>
+                <div class="available-days">
+                    <span th:each="dia : ${perfil.diasDisponibles}" th:text="${dia}"></span>
+                </div>
             </div>
+            <div class="profile-item">
+                <label>Horario Mañana:</label>
+                <span th:text="${perfil.horarioMananaInicio} + ' - ' + ${perfil.horarioMananaFin}"></span>
+            </div>
+            <div class="profile-item">
+                <label>Horario Tarde:</label>
+                <span th:text="${perfil.horarioTardeInicio} + ' - ' + ${perfil.horarioTardeFin}"></span>
+            </div>
+            <div class="profile-item">
+                <label>Citas:</label>
+                <ul>
+                    <li th:each="cita : ${perfil.citas}" th:text="${cita}"></li>
+                </ul>
+            </div>
+            <a th:href="@{/cita/agendar/{id}(id=${perfil.id})}" class="btn btn-primary mt-3">Agendar Cita</a>
         </div>
-        <div class="profile-item">
-            <label>Horario Mañana:</label>
-            <span th:text="${perfil.horarioMananaInicio} + ' - ' + ${perfil.horarioMananaFin}"></span>
-        </div>
-        <div class="profile-item">
-            <label>Horario Tarde:</label>
-            <span th:text="${perfil.horarioTardeInicio} + ' - ' + ${perfil.horarioTardeFin}"></span>
-        </div>
-        <div class="profile-item">
-            <label>Citas:</label>
-            <ul>
-                <li th:each="cita : ${perfil.citas}" th:text="${cita}"></li>
-            </ul>
-        </div>
-        <a th:href="@{/cita/agendar/{id}(id=${perfil.id})}" class="btn btn-primary mt-3">Agendar Cita</a>
+        
+        <!-- Botón para editar el perfil, visible para todos los usuarios -->
+        <a th:href="@{/perfil/modificar/{id}(id=${perfil.id})}" class="btn btn-secondary mt-3">Editar Perfil</a>
     </div>
 </body>
 </html>
