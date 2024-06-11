@@ -46,8 +46,8 @@ public class PerfilController {
     
     @GetMapping("/todos")
     public String listarTodosLosPerfiles(Model model) {
-        List<Perfil> perfil = perfilService.obtenerTodosLosPerfiles();
-        model.addAttribute("perfil", perfil);
+        List<Perfil> perfiles = perfilService.obtenerTodosLosPerfiles();
+        model.addAttribute("perfiles", perfiles);
         return "listaPerfiles";
     }
   

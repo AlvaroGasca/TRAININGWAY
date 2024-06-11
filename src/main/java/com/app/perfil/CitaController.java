@@ -47,9 +47,6 @@ public class CitaController {
                 diasDisponibles = new ArrayList<>();
             }
 
-            // Depuración: Verifica el contenido de diasDisponibles
-            System.out.println("Días Disponibles: " + diasDisponibles);
-
             // Convertir diasDisponibles a JSON
             ObjectMapper mapper = new ObjectMapper();
             try {

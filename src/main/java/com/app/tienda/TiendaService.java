@@ -73,6 +73,10 @@ public class TiendaService {
                 like.setUsuario(usuario);
                 like.setTienda(tienda);
                 likeRepository.save(like);
+            } else if (likeRepository.existsByUsuarioAndTienda(usuario, tienda)) {
+                tienda.setMeGusta(tienda.getMeGusta() - 1);
+                tiendaRepository.save(tienda);
+                likeRepository.deleteByUsuarioAndTienda(usuario, tienda);
             }
         }
     }

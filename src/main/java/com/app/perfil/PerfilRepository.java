@@ -17,7 +17,6 @@ import org.springframework.data.jpa.repository.Query;
 public interface PerfilRepository extends JpaRepository<Perfil, Long> {
     Perfil findByUsuario(Usuario usuario);
         
-    @Query("SELECT n FROM Perfil n")
     List<Perfil> findAll();
 
 }

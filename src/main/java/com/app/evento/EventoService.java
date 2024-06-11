@@ -71,6 +71,10 @@ public class EventoService {
                 like.setUsuario(usuario);
                 like.setEvento(evento);
                 likeRepository.save(like);
+            } else if (likeRepository.existsByUsuarioAndEvento(usuario, evento)) {
+                evento.setMeGusta(evento.getMeGusta() - 1);
+                eventoRepository.save(evento);
+                likeRepository.deleteByUsuarioAndEvento(usuario, evento);
             }
         }
     }

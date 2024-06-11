@@ -68,6 +68,10 @@ public class NoticiaService {
                 like.setUsuario(usuario);
                 like.setNoticia(noticia);
                 likeRepository.save(like);
+            } else if (likeRepository.existsByUsuarioAndNoticia(usuario, noticia)){
+                noticia.setMeGusta(noticia.getMeGusta() - 1);
+                noticiaRepository.save(noticia);
+                likeRepository.deleteByUsuarioAndNoticia(usuario, noticia);
             }
         }
     }

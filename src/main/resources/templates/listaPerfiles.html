@@ -53,7 +53,7 @@
             </div>
         </div>
     </nav>
-    
+
     <div class="container mt-3">
         <form th:action="@{/perfiles/filtrar}" method="get" class="row">
             <div class="col-md-5">
@@ -71,13 +71,12 @@
             </div>
         </form>
     </div>
-    
+
     <div class="container mt-5">
         <h2>Perfiles de Entrenadores</h2>
         <div class="row">
             <div th:each="perfil : ${perfiles}" class="col-md-4">
                 <div class="card mb-4">
-                    <img th:src="@{/assets/default-profile.jpg}" class="card-img-top" alt="Imagen de Perfil">
                     <div class="card-body">
                         <h5 class="card-title" th:text="${perfil.usuario.nombre} + ' ' + ${perfil.usuario.apellidos}">Nombre del Entrenador</h5>
                         <p class="card-text" th:text="${perfil.descripcion}">Descripción del perfil...</p>
@@ -86,12 +85,13 @@
                         <p class="card-text"><small class="text-muted">Teléfono: <span th:text="${perfil.mostrarTelefono ? perfil.usuario.telefono : 'No disponible'}"></span></small></p>
                         <p class="card-text"><small class="text-muted">Correo: <span th:text="${perfil.mostrarCorreo ? perfil.usuario.correo : 'No disponible'}"></span></small></p>
                         <p class="card-text"><small class="text-muted">Disponibilidad: <span th:text="${perfil.disponibilidad}"></span></small></p>
+                        <a th:href="@{/perfil/ver/{id}(id=${perfil.id})}" class="btn btn-primary">Ver Perfil</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    
+
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
 </body>
