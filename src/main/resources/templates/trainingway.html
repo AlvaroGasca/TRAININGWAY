@@ -6,11 +6,13 @@
     <title>TrainingWay</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@700&display=swap" rel="stylesheet">
     <link rel="icon" th:href="@{/assets/logo.png}" type="image/x-icon">
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Roboto Condensed', sans-serif;
             background-color: #f8f9fa;
+            color: #333;
         }
 
         .navbar {
@@ -24,13 +26,14 @@
 
         .card {
             background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Cambié la intensidad de la sombra */
-            transition: transform 0.3s ease; /* Agregué transición al agrandar */
+            border-radius: 15px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .card:hover {
-            transform: scale(1.05); /* Efecto de agrandar al pasar el ratón */
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
         }
 
         .card-title {
@@ -50,14 +53,37 @@
 
         .search-bar input[type="text"] {
             border-radius: 20px;
-            height: 40px;
+            height: 50px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .search-bar input[type="text"]:focus {
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            outline: none;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            border-radius: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
         }
 
         .news-section {
             background-color: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
         }
 
         .news-card {
@@ -65,34 +91,83 @@
         }
 
         .news-card img {
-            border-top-left-radius: 10px;
-            border-top-right-radius: 10px;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
             max-height: 200px;
             object-fit: cover;
         }
 
-        .news-card-title {
-            font-size: 1.25rem;
-            font-weight: bold;
-            margin-bottom: 0.5rem;
+        .pagination {
+            text-align: center;
+            margin-top: 20px;
         }
 
-        .news-card-text {
-            font-size: 1rem;
-            color: #6c757d;
+        .pagination li {
+            display: inline-block;
+            margin: 0 5px;
         }
 
-        .btn-toggle-dark-mode {
-            cursor: pointer;
+        .pagination .page-item a {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 15px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .pagination .page-item a:hover {
+            background-color: #0056b3;
+        }
+
+        .pagination .page-item.disabled a {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        .pagination-summary {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .pageSizeSelector {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
             background-color: #001f3f;
             color: #fff;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 5px;
+            margin-top: 20px;
         }
 
-        .btn-toggle-dark-mode:hover {
-            background-color: #001633;
+        .footer a {
+            color: #ffcc00;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer a:hover {
+            color: #ffd633;
+        }
+
+        .btn-like {
+            background-color: transparent;
+            border: none;
+            color: #dc3545;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .btn-like:hover {
+            color: #c82333;
+        }
+
+        .btn-like i {
+            margin-right: 5px;
         }
 
         .iframe-container {
@@ -112,13 +187,6 @@
             border: 0;
         }
 
-        footer {
-            text-align: center;
-            padding: 20px;
-            background-color: #f1f1f1;
-            margin-top: 20px;
-        }
-
         @media (max-width: 767.98px) {
             .navbar-brand img {
                 height: 40px;
@@ -129,7 +197,6 @@
             }
         }
 
-        /* Añadido para quitar el estilo de subrayado y color azul en los enlaces */
         a.card-link, a.card-link:hover, a.card-link:focus, a.card-link:active {
             color: inherit;
             text-decoration: none;
@@ -141,7 +208,7 @@
 <!-- Barra de navegación -->
 <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container">
-        <a class="navbar-brand" href="#"><img th:src="@{/assets/logo.PNG}" alt="Logo"></a>
+        <a class="navbar-brand" href="/trainingway"><img th:src="@{/assets/logo.PNG}" alt="Logo"></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -203,7 +270,7 @@
         <!-- Tarjeta de eventos -->
         <div class="col-md-4">
             <div class="card mb-4">
-                <a th:href="@{/eventos/todos}" class="card-link"> <!-- Agregué un enlace alrededor de la tarjeta -->
+                <a th:href="@{/eventos/todos}" class="card-link">
                     <img th:src="@{/assets/evento1.png}" class="card-img-top" alt="Imagen de Eventos">
                     <div class="card-body">
                         <h5 class="card-title">Eventos</h5>
@@ -214,7 +281,7 @@
         <!-- Tarjeta de entrenadores -->
         <div class="col-md-4">
             <div class="card mb-4">
-                <a th:href="@{/perfil/todos}" class="card-link"> <!-- Agregué un enlace alrededor de la tarjeta -->
+                <a th:href="@{/perfil/todos}" class="card-link">
                     <img th:src="@{/assets/entrenador.png}" class="card-img-top" alt="Imagen de Entrenadores">
                     <div class="card-body">
                         <h5 class="card-title">Entrenadores</h5>
@@ -225,7 +292,7 @@
         <!-- Tarjeta de tienda -->
         <div class="col-md-4">
             <div class="card mb-4">
-                <a th:href="@{/tienda/todos}" class="card-link"> <!-- Agregué un enlace alrededor de la tarjeta -->
+                <a th:href="@{/tienda/todos}" class="card-link">
                     <img th:src="@{/assets/tienda.png}" class="card-img-top" alt="Imagen de Tienda">
                     <div class="card-body">
                         <h5 class="card-title">Tienda</h5>

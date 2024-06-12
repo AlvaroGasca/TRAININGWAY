@@ -44,6 +44,7 @@ public class PerfilController {
     }
     model.addAttribute("usuario", usuario);
     model.addAttribute("perfil", perfil);
+    model.addAttribute("authUserId", usuario.getId());
     return "perfil";
 }
     
@@ -70,15 +71,18 @@ public class PerfilController {
     }
 
     @GetMapping("/ver/{id}")
-    public String verPerfil(@PathVariable Long id, Model model) {
-        Perfil perfil = perfilService.obtenerPerfilPorId(id);
-        if (perfil != null) {
-            model.addAttribute("perfil", perfil);
-            return "perfil";
-        } else {
-            return "redirect:/perfil/mi-perfil";
-        }
+    public String verPerfil(@PathVariable Long id, Model model, Principal principal) {
+    String username = principal.getName();
+    Usuario authUser = usuarioService.obtenerUsuarioPorUsername(username);
+    Perfil perfil = perfilService.obtenerPerfilPorId(id);
+    if (perfil != null) {
+        model.addAttribute("perfil", perfil);
+        model.addAttribute("authUserId", authUser.getId());
+        return "perfil";
+    } else {
+        return "redirect:/perfil/mi-perfil";
     }
+}
     
     @GetMapping("/modificar/{id}")
     public String modificarPerfilForm(@PathVariable Long id, Model model) {

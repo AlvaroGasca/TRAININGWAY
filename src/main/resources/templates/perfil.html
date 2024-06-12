@@ -1,28 +1,39 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Perfil del Entrenador</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Perfil de <span th:text="${perfil.usuario.nombre}"></span></title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@700&display=swap" rel="stylesheet">
     <style>
         body {
+            font-family: 'Roboto Condensed', sans-serif;
             background-color: #f8f9fa;
-            padding: 20px;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            font-size: 1.1rem;
         }
 
-        h1 {
-            text-align: center;
-            margin-bottom: 30px;
+        .navbar {
+            background-color: #001f3f;
+            height: auto;
+        }
+
+        .navbar-brand img {
+            height: 35px;
         }
 
         .profile-container {
-            max-width: 600px;
-            margin: 0 auto;
+            max-width: 800px;
+            margin: 20px auto;
             background-color: #ffffff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
         }
 
         .profile-item {
@@ -47,44 +58,154 @@
         }
 
         .available-day {
-            background-color: #d4edda;
             padding: 5px 10px;
             border-radius: 5px;
+            color: #fff;
+            font-weight: bold;
+            background-color: #28a745;
         }
 
-        .unavailable-day {
-            background-color: #f8d7da;
-            padding: 5px 10px;
-            border-radius: 5px;
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            border-radius: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            border-radius: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+
+        .btn-back {
+            background-color: #6c757d;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            border-radius: 20px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            color: #fff;
+            margin-bottom: 20px;
+        }
+
+        .btn-back:hover {
+            background-color: #5a6268;
+            transform: translateX(-5px);
+        }
+
+        .edit-button {
+            margin-top: 10px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #001f3f;
+            color: #fff;
+        }
+
+        .footer a {
+            color: #ffcc00;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer a:hover {
+            color: #ffd633;
+        }
+
+        .container-fluid {
+            padding: 0;
         }
     </style>
 </head>
-<body>
-    <h1>Perfil del Entrenador</h1>
-    <div class="profile-container">
-        <div class="profile-item">
-            <label>Nombre:</label>
-            <span th:text="${perfil.usuario.nombre} + ' ' + ${perfil.usuario.apellidos}"></span>
+<body th:data-auth-user-id="${authUserId}">
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" th:href="@{/trainingway}"><img th:src="@{/assets/logo.PNG}" alt="Logo"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-bars"></i>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenu">
+                            <li><a class="dropdown-item" th:href="@{/noticias/todas}">Noticias</a></li>
+                            <li><a class="dropdown-item" th:href="@{/eventos/todos}">Eventos</a></li>
+                            <li><a class="dropdown-item" th:href="@{/perfil/todos}">Entrenadores</a></li>
+                            <li><a class="dropdown-item" th:href="@{/tienda/todos}">Tienda</a></li>
+                            <li><a class="dropdown-item" th:href="@{/perfil/mi-perfil}">Perfil</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Personas Favoritas</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-cog"></i>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" th:href="@{/noticias/mis-noticias}">Mis Noticias</a></li>
+                            <li><a class="dropdown-item" th:href="@{/eventos/mis-eventos}">Mis eventos</a></li>
+                            <li><a class="dropdown-item" th:href="@{/cita/mis-citas}">Mis citas</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Salir</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
         </div>
-        <div class="profile-item">
-            <label>Descripción:</label>
-            <span th:text="${perfil.descripcion}"></span>
-        </div>
-        <div class="profile-item" th:if="${perfil.mostrarTelefono}">
-            <label>Teléfono:</label>
-            <span th:text="${perfil.usuario.telefono}"></span>
-        </div>
-        <div class="profile-item" th:if="${perfil.mostrarCorreo}">
-            <label>Correo:</label>
-            <span th:text="${perfil.usuario.correo}"></span>
-        </div>
-        
-        <!-- Condición para mostrar el resto de la información solo si el usuario tiene especialidad -->
-        <div th:if="${perfil.usuario.especialidad != null}">
+    </nav>
+
+    <form id="logout-form" action="/logout" method="POST" style="display: none;">
+        <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+    </form>
+
+    <div class="container mt-5">
+        <button class="btn btn-back" onclick="history.back()">
+            <i class="fas fa-arrow-left"></i> Atrás
+        </button>
+        <h1 class="mb-4 text-center">Perfil de <span th:text="${perfil.usuario.nombre}"></span></h1>
+        <div class="profile-container" th:data-profile-user-id="${perfil.usuario.id}">
+            <div class="profile-item">
+                <label>Nombre:</label>
+                <span th:text="${perfil.usuario.nombre} + ' ' + ${perfil.usuario.apellidos}"></span>
+            </div>
+            <div class="profile-item">
+                <label>Descripción:</label>
+                <span th:text="${perfil.descripcion}"></span>
+            </div>
+            <div class="profile-item" th:if="${perfil.mostrarTelefono}">
+                <label>Teléfono:</label>
+                <span th:text="${perfil.usuario.telefono}"></span>
+            </div>
+            <div class="profile-item" th:if="${perfil.mostrarCorreo}">
+                <label>Correo:</label>
+                <span th:text="${perfil.usuario.correo}"></span>
+            </div>
             <div class="profile-item">
                 <label>Disponibilidad:</label>
-                <div class="available-days">
-                    <span th:each="dia : ${perfil.diasDisponibles}" th:text="${dia}"></span>
+                <div class="available-days" id="available-days">
+                    <span th:each="dia : ${perfil.diasDisponibles}" th:text="${dia}" class="available-day"></span>
                 </div>
             </div>
             <div class="profile-item">
@@ -102,10 +223,40 @@
                 </ul>
             </div>
             <a th:href="@{/cita/agendar/{id}(id=${perfil.id})}" class="btn btn-primary mt-3">Agendar Cita</a>
+            <a th:href="@{/perfil/modificar/{id}(id=${perfil.id})}" class="btn btn-secondary mt-3 edit-button" th:data-profile-user-id="${perfil.usuario.id}">Editar Perfil</a>
         </div>
-        
-        <!-- Botón para editar el perfil, visible para todos los usuarios -->
-        <a th:href="@{/perfil/modificar/{id}(id=${perfil.id})}" class="btn btn-secondary mt-3">Editar Perfil</a>
     </div>
+
+    <footer>
+        &copy; 2024 TrainingWay Inc. Todos los derechos reservados.
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const daysOrder = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
+            const daysContainer = document.getElementById('available-days');
+            const days = Array.from(daysContainer.children);
+            
+            days.sort((a, b) => {
+                return daysOrder.indexOf(a.innerText) - daysOrder.indexOf(b.innerText);
+            });
+
+            days.forEach(day => daysContainer.appendChild(day));
+
+            const authUserId = document.body.getAttribute('data-auth-user-id');
+            const profileUserId = document.querySelector('.profile-container').getAttribute('data-profile-user-id');
+            
+            console.log("authUserId:", authUserId);
+            console.log("profileUserId:", profileUserId);
+            
+            if (authUserId !== profileUserId) {
+                document.querySelector('.edit-button').style.display = 'none';
+            } else {
+                document.querySelector('.edit-button').style.display = 'block';
+            }
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
 </body>
 </html>
