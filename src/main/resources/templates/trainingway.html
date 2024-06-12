@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TrainingWay</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
-    <link rel="icon" th:href="@{/assets/logo.PNG}" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="icon" th:href="@{/assets/logo.png}" type="image/x-icon">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -14,19 +15,22 @@
 
         .navbar {
             background-color: #001f3f;
-            height: 50px;
+            height: auto;
         }
 
         .navbar-brand img {
-            height: 60px; /* Tamaño grande para el logo */
-            position: relative; /* Para controlar el posicionamiento */
-            transform: translateX(-50%);
+            height: 35px;
         }
 
         .card {
             background-color: #fff;
             border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Cambié la intensidad de la sombra */
+            transition: transform 0.3s ease; /* Agregué transición al agrandar */
+        }
+
+        .card:hover {
+            transform: scale(1.05); /* Efecto de agrandar al pasar el ratón */
         }
 
         .card-title {
@@ -46,7 +50,7 @@
 
         .search-bar input[type="text"] {
             border-radius: 20px;
-            height: 40px; /* Ajuste para hacer la barra más fina */
+            height: 40px;
         }
 
         .news-section {
@@ -94,7 +98,7 @@
         .iframe-container {
             position: relative;
             overflow: hidden;
-            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+            padding-top: 56.25%;
             margin-top: 20px;
             margin-bottom: 20px;
         }
@@ -114,47 +118,70 @@
             background-color: #f1f1f1;
             margin-top: 20px;
         }
+
+        @media (max-width: 767.98px) {
+            .navbar-brand img {
+                height: 40px;
+            }
+
+            .navbar-nav .nav-item {
+                text-align: center;
+            }
+        }
+
+        /* Añadido para quitar el estilo de subrayado y color azul en los enlaces */
+        a.card-link, a.card-link:hover, a.card-link:focus, a.card-link:active {
+            color: inherit;
+            text-decoration: none;
+        }
     </style>
 </head>
 <body>
 
 <!-- Barra de navegación -->
 <nav class="navbar navbar-expand-lg navbar-dark">
-    <div class="container d-flex justify-content-center">
-        <ul class="navbar-nav me-auto">
-            <!-- Menú desplegable de opciones -->
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Menú
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenu">
-                    <li><a class="dropdown-item" th:href="@{/noticias/todas}">Noticias</a></li>
-                    <li><a class="dropdown-item" th:href="@{/eventos/todos}">Eventos</a></li>
-                    <li><a class="dropdown-item" th:href="@{/perfil/todos}">Entrenadores</a></li>
-                    <li><a class="dropdown-item" th:href="@{/tienda/todos}">Tienda</a></li>
-                    <li><a class="dropdown-item" th:href="@{/cita/mis-citas}">Perfil</a></li>
-                </ul>
-            </li>
-        </ul>
-        <a class="navbar-brand mx-auto" href="#"><img th:src="@{/assets/logo.PNG}" alt="Logo"></a>
-        <ul class="navbar-nav ms-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="#">Personas Favoritas</a>
-            </li>
-            <!-- Menú desplegable de ajustes -->
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Ajustes
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" th:href="@{/noticias/mis-noticias}">Mis Noticias</a></li>
-                    <li><a class="dropdown-item" th:href="@{/eventos/mis-eventos}">Mis eventos</a></li>
-                    <li><a class="dropdown-item" th:href="@{/perfil/mi-perfil}">Perfil</a></li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Salir</a></li>
-                </ul>
-            </li>
-        </ul>
+    <div class="container">
+        <a class="navbar-brand" href="#"><img th:src="@{/assets/logo.PNG}" alt="Logo"></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <!-- Menú desplegable de opciones -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <!-- Ícono de tres barras -->
+                        <i class="fas fa-bars"></i>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenu">
+                        <li><a class="dropdown-item" th:href="@{/noticias/todas}">Noticias</a></li>
+                        <li><a class="dropdown-item" th:href="@{/eventos/todos}">Eventos</a></li>
+                        <li><a class="dropdown-item" th:href="@{/perfil/todos}">Entrenadores</a></li>
+                        <li><a class="dropdown-item" th:href="@{/tienda/todos}">Tienda</a></li>
+                        <li><a class="dropdown-item" th:href="@{/perfil/mi-perfil}">Perfil</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Personas Favoritas</a>
+                </li>
+                <!-- Menú desplegable de ajustes -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <!-- Ícono de engranaje -->
+                        <i class="fas fa-cog"></i>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" th:href="@{/noticias/mis-noticias}">Mis Noticias</a></li>
+                        <li><a class="dropdown-item" th:href="@{/eventos/mis-eventos}">Mis eventos</a></li>
+                        <li><a class="dropdown-item" th:href="@{/cita/mis-citas}">Mis Citas</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Salir</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
     </div>
 </nav>
 
@@ -164,7 +191,7 @@
 
 <!-- Barra de búsqueda -->
 <div class="container mt-3 mb-3">
-    <div class="input-group search-bar">
+   <div class="input-group search-bar">
         <input type="text" class="form-control" placeholder="Buscar...">
         <button class="btn btn-primary" type="button">Buscar</button>
     </div>
@@ -176,28 +203,34 @@
         <!-- Tarjeta de eventos -->
         <div class="col-md-4">
             <div class="card mb-4">
-                <img th:src="@{/assets/evento1.png}" class="card-img-top" alt="Imagen de Eventos">
-                <div class="card-body">
-                    <h5 class="card-title">Eventos</h5>
-                </div>
+                <a th:href="@{/eventos/todos}" class="card-link"> <!-- Agregué un enlace alrededor de la tarjeta -->
+                    <img th:src="@{/assets/evento1.png}" class="card-img-top" alt="Imagen de Eventos">
+                    <div class="card-body">
+                        <h5 class="card-title">Eventos</h5>
+                    </div>
+                </a>
             </div>
         </div>
         <!-- Tarjeta de entrenadores -->
         <div class="col-md-4">
             <div class="card mb-4">
-                <img th:src="@{/assets/entrenador.png}" class="card-img-top" alt="Imagen de Entrenadores">
-                <div class="card-body">
-                    <h5 class="card-title">Entrenadores</h5>
-                </div>
+                <a th:href="@{/perfil/todos}" class="card-link"> <!-- Agregué un enlace alrededor de la tarjeta -->
+                    <img th:src="@{/assets/entrenador.png}" class="card-img-top" alt="Imagen de Entrenadores">
+                    <div class="card-body">
+                        <h5 class="card-title">Entrenadores</h5>
+                    </div>
+                </a>
             </div>
         </div>
         <!-- Tarjeta de tienda -->
         <div class="col-md-4">
             <div class="card mb-4">
-                <img th:src="@{/assets/tienda.png}" class="card-img-top" alt="Imagen de Tienda">
-                <div class="card-body">
-                    <h5 class="card-title">Tienda</h5>
-                </div>
+                <a th:href="@{/tienda/todos}" class="card-link"> <!-- Agregué un enlace alrededor de la tarjeta -->
+                    <img th:src="@{/assets/tienda.png}" class="card-img-top" alt="Imagen de Tienda">
+                    <div class="card-body">
+                        <h5 class="card-title">Tienda</h5>
+                    </div>
+                </a>
             </div>
         </div>
     </div>
@@ -205,7 +238,7 @@
 
 <!-- Sección de noticias -->
 <div class="container mt-5 news-section">
-    <h2>Noticias</h2>
+    <h2><a th:href="@{/noticias/todas}" class="card-link">Noticias</a></h2>
     <div class="row">
         <!-- Tarjetas de noticias -->
         <div th:each="noticia : ${noticias}" class="col-md-3 news-card">
