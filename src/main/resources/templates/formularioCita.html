@@ -1,93 +1,142 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agendar Cita</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.js"></script>
-    
-    <style>
-    .available-day {
-        background-color: #d4edda !important;
-    }
-    .unavailable-day {
-        background-color: #f8d7da !important;
-        pointer-events: none;
-    }
-</style>
-</head>
-<body>
-<div class="container">
-    <h1>Agendar Cita</h1>
-    <form th:action="@{/cita/agendar}" method="post">
-        <input type="hidden" name="perfilId" th:value="${perfil.id}">
-        <div class="form-group">
-            <label for="hora">Selecciona una hora:</label>
-            <select id="hora" name="hora" class="form-control" required>
-                <option th:each="hora : ${horarios}" th:value="${hora}" th:text="${hora}"></option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="calendar">Selecciona un día:</label>
-            <div id="calendar"></div>
-            <input type="hidden" id="dia" name="dia" required>
-        </div>
-        <button type="submit" class="btn btn-primary">Agendar</button>
-    </form>
-</div>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Agendar Cita</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.js"></script>
 
-<script th:inline="javascript">
-    document.addEventListener('DOMContentLoaded', function() {
-        var calendarEl = document.getElementById('calendar');
-        /*<![CDATA[*/
-        const diasDisponiblesJson = [[${diasDisponiblesJson}]]; 
-        const citasOcupadas = [[${perfil.citas}]];
-         /*]]>*/
-        var diasDisponibles = JSON.parse(diasDisponiblesJson);
-
-        const dayMap = {
-            "Domingo": 6,
-            "Lunes": 0,
-            "Martes": 1,
-            "Miércoles": 2,
-            "Jueves": 3,
-            "Viernes": 4,
-            "Sábado": 5
-        };
-
-        var allowedDays = diasDisponibles.map(day => dayMap[day]);
-
-
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-            initialView: 'dayGridMonth',
-            selectable: true,
-            locale: 'es',
-            firstDay: 1,
-            select: function(info) {
-                var selectedDate = info.startStr;
-                document.getElementById('dia').value = selectedDate;
-            },
-            validRange: function(nowDate) {
-                return {
-                    start: nowDate
-                };
-            },
-            dayCellClassNames: function(arg) {
-                var day = arg.date.getUTCDay();
-                return allowedDays.includes(day) ? 'available-day' : 'unavailable-day';
-            },
-            selectAllow: function(selectInfo) {
-                var day = selectInfo.start.getUTCDay();
-                return allowedDays.includes(day);
+        <style>
+            .available-day {
+                background-color: #d4edda !important;
             }
-        });
+            .unavailable-day {
+                background-color: #f8d7da !important;
+                pointer-events: none;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Agendar Cita</h1>
+            <div id="calendar"></div>
+        </div>
+        <div class="modal fade" id="formularioCita" tabindex="-1" aria-labelledby="formularioCitaLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="formularioCitaLabel">Agendar Cita</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form th:action="@{/cita/agendar}" method="post">
+                        <div class="modal-body">
+                            <input type="hidden" name="perfilId" th:value="${perfil.id}">
+                            <div class="form-group">
+                                <label for="dia">Día seleccionado</label>
+                                <input type="text" name="dia" id="inputFecha" readonly>
+                            </div> 
+                            <div class="form-group">
+                                <label for="hora">Selecciona una hora:</label>
+                                <select id="hora" name="hora" class="form-control" required>
+                                </select>
+                            </div> 
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <button type="submit" class="btn btn-primary">Agendar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
 
-        calendar.render();
-    });
-</script>
+        <script th:inline="javascript">
+            document.addEventListener('DOMContentLoaded', function () {
+                var calendarEl = document.getElementById('calendar');
+                const modal = new bootstrap.Modal(document.getElementById('formularioCita'), {});
+                const inputFecha = document.getElementById('inputFecha');
+                /*<![CDATA[*/
+                const diasDisponiblesJson = [[${diasDisponiblesJson
+                }
+                ]];
+                    const citasOcupadas = [[${perfil.citas
+                    }
+                    ]];
+                    const horarios = [[${horarios
+                    }
+                ]];
+                /*]]>*/
+                var diasDisponibles = JSON.parse(diasDisponiblesJson);
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+                const citasOcupadasParsed = citasOcupadas.map(cita => {
+                    const [datetime, persona] = cita.split(' - ');
+                    const [date, time] = datetime.split(' ');
+                    return {date, time};
+                });
+
+                const dayMap = {
+                    "Domingo": 6,
+                    "Lunes": 0,
+                    "Martes": 1,
+                    "Miércoles": 2,
+                    "Jueves": 3,
+                    "Viernes": 4,
+                    "Sábado": 5
+                };
+
+                var allowedDays = diasDisponibles.map(day => dayMap[day]);
+                
+                function cargarHoras(fecha){
+                    const horasDisponibles = horarios.filter(hora => {
+                        return !citasOcupadasParsed.some(ocupado => {
+                            return ocupado.time === hora && ocupado.date === fecha;
+                        })
+                    })
+                    const selector = document.getElementById('hora');
+                    while (selector.firstChild) {
+                selector.removeChild(selector.firstChild);
+            }
+                    
+                    horasDisponibles.forEach(hora => {
+                const opcion = document.createElement('option');
+                opcion.value = `${hora}`;
+                opcion.text = `${hora}`;
+                selector.add(opcion);
+            });
+        }
+
+                var calendar = new FullCalendar.Calendar(calendarEl, {
+                    initialView: 'dayGridMonth',
+                    selectable: true,
+                    locale: 'es',
+                    firstDay: 1,
+                    dateClick: function (info) {
+                        const fecha = info.dateStr;
+                        if(allowedDays.includes(info.dayEl.cellIndex)){
+                            inputFecha.value = fecha;
+                        cargarHoras(fecha);
+                        modal.show();
+                        } else {
+                            alert("Este día no está disponible.");
+                        }
+                    },
+                    validRange: function (nowDate) {
+                        return {
+                            start: nowDate
+                        };
+                    },
+                    dayCellClassNames: function (arg) {
+                        var day = arg.date.getUTCDay();
+                        return allowedDays.includes(day) ? 'available-day' : 'unavailable-day';
+                    }
+                });
+
+                calendar.render();
+            });
+        </script>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    </body>
 </html>
