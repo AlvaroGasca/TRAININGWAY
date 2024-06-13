@@ -1,26 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <title>Registro e inicio de sesión</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@700&display=swap" rel="stylesheet">
     <style>
-        html, body {
-            height: 100%;
+        body {
+            font-family: 'Roboto Condensed', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background-color: #001f3f;
+            height: auto;
+        }
+
+        .navbar-brand img {
+            height: 35px;
         }
 
         .global-container {
-            height: 100%;
+            flex: 1;
             display: flex;
             align-items: center;
             justify-content: center;
-            background-color: #f5f5f5;
         }
 
-        form {
-            padding-top: 10px;
-            font-size: 14px;
-            margin-top: 30px;
+        .login-form {
+            max-width: 800px;
+            width: 100%;
+            margin: 40px auto;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
         }
 
         .card-title {
@@ -32,67 +52,60 @@
             margin-top: 20px;
         }
 
-        .login-form {
-            width: 600px;
-            margin: 20px;
-        }
-
-        .sign-up {
-            text-align: center;
-            padding: 20px 0 0;
-        }
-
-        .alert {
-            margin-bottom: -30px;
-            font-size: 13px;
-            margin-top: 20px;
-        }
-
-        nav {
-            margin-bottom: 20px;
-        }
-
         h1 {
             text-align: center;
+            margin-bottom: 30px;
         }
 
         label {
-            display: block;
-            margin-top: 10px;
-            font-weight: 500;
+            font-weight: bold;
+            margin-bottom: 5px;
         }
 
         input, select {
             width: 100%;
-            padding: 8px;
-            margin-top: 5px;
+            padding: 10px;
             margin-bottom: 15px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
         }
 
         button {
-            width: 100%;
-            padding: 10px;
             background-color: #007bff;
             color: #fff;
+            padding: 10px 20px;
             border: none;
+            border-radius: 20px;
             cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #0056b3;
         }
 
         a {
             display: block;
             text-align: center;
-            margin-top: 10px;
+            color: #007bff;
+            margin-top: 20px;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #0056b3;
         }
 
         .row > .col {
             padding: 0 10px;
         }
     </style>
-    <title>Registro e inicio de sesión</title>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
             <a class="navbar-brand" th:href="@{/}">Registro e inicio de sesión</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -120,30 +133,30 @@
                 </div>
                 <div class="row">
                     <div class="col">
-                        <label for="username">Usuario:</label>
-                        <input type="text" id="username" name="username" th:field="*{username}" required>
+                        <label for="username" class="form-label">Usuario:</label>
+                        <input type="text" id="username" name="username" th:field="*{username}" class="form-control" required>
 
-                        <label for="password">Contraseña:</label>
-                        <input type="password" id="password" name="password" th:field="*{password}" required>
+                        <label for="password" class="form-label">Contraseña:</label>
+                        <input type="password" id="password" name="password" th:field="*{password}" class="form-control" required>
 
-                        <label for="nombre">Nombre:</label>
-                        <input type="text" id="nombre" name="nombre" th:field="*{nombre}" required>
+                        <label for="nombre" class="form-label">Nombre:</label>
+                        <input type="text" id="nombre" name="nombre" th:field="*{nombre}" class="form-control" required>
 
-                        <label for="apellidos">Apellidos:</label>
-                        <input type="text" id="apellidos" name="apellidos" th:field="*{apellidos}" required>
+                        <label for="apellidos" class="form-label">Apellidos:</label>
+                        <input type="text" id="apellidos" name="apellidos" th:field="*{apellidos}" class="form-control" required>
                     </div>
                     <div class="col">
-                        <label for="correo">Correo:</label>
-                        <input type="email" id="correo" name="correo" th:field="*{correo}" required>
+                        <label for="correo" class="form-label">Correo:</label>
+                        <input type="email" id="correo" name="correo" th:field="*{correo}" class="form-control" required>
 
-                        <label for="telefono">Teléfono:</label>
-                        <input type="telefono" id="telefono" name="telefono" th:field="*{telefono}" required>
+                        <label for="telefono" class="form-label">Teléfono:</label>
+                        <input type="telefono" id="telefono" name="telefono" th:field="*{telefono}" class="form-control" required>
 
-                        <label for="ubicacion">Ubicación:</label>
-                        <input type="text" id="ubicacion" name="ubicacion" th:field="*{ubicacion}" required>
+                        <label for="ubicacion" class="form-label">Ubicación:</label>
+                        <input type="text" id="ubicacion" name="ubicacion" th:field="*{ubicacion}" class="form-control" required>
 
                         <div id="especialidadDiv" style="display: none;">
-                            <label for="especialidad">Especialidad:</label>
+                            <label for="especialidad" class="form-label">Especialidad:</label>
                             <select id="especialidad" name="especialidad" class="form-select">
                                 <option th:each="especialidad : ${T(com.app.usuario.Especialidad).values()}"
                                         th:value="${especialidad}" th:text="${especialidad}"></option>
@@ -152,24 +165,28 @@
                     </div>
                 </div>
 
-                <button type="submit">Registrarse</button>
+                <button type="submit" class="btn btn-primary">Registrarse</button>
             </form>
-            <br/>
             <a th:href="@{/login}">¿Ya tienes una cuenta? Inicia Sesión</a>
         </div>
     </div>
 
     <script>
-    function mostrarEspecialidad(valor) {
-        var especialidadDiv = document.getElementById("especialidadDiv");
-        if (valor === "entrenador") {
-            especialidadDiv.style.display = "block";
-        } else {
-            especialidadDiv.style.display = "none";
-            document.getElementById("especialidad").value = "";  // Resetear el valor del campo especialidad
+        function mostrarEspecialidad(valor) {
+            var especialidadDiv = document.getElementById("especialidadDiv");
+            if (valor === "entrenador") {
+                especialidadDiv.style.display = "block";
+            } else {
+                especialidadDiv.style.display = "none";
+                document.getElementById("especialidad").value = "";  // Resetear el valor del campo especialidad
+            }
         }
-    }
     </script>
 
+    <footer>
+        &copy; 2024 TrainingWay Inc. Todos los derechos reservados.
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
 </body>
 </html>

@@ -208,6 +208,9 @@
         </div>
     </div>
 </nav>
+    <form id="logout-form" action="/logout" method="POST" style="display: none;">
+        <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+    </form>
 
     <!-- Carrusel de entrenadores destacados -->
     <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">

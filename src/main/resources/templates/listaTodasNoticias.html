@@ -273,7 +273,7 @@
     <div class="row" id="noticiasContainer">
         <div th:each="noticia : ${noticias}" class="col-md-4 noticia">
             <div class="card mb-4">
-                <img th:src="@{/assets/default-news.jpg}" class="card-img-top" alt="Imagen de Noticia">
+               <!-- <img th:src="@{/assets/default-news.jpg}" class="card-img-top" alt="Imagen de Noticia"> -->
                 <div class="card-body">
                     <h5 class="card-title" th:text="${noticia.titulo}">Título de la Noticia</h5>
                     <p class="card-text" th:text="${noticia.cuerpo}">Contexto breve de la noticia...</p>

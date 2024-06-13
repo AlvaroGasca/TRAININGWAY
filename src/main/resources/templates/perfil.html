@@ -202,6 +202,7 @@
                 <label>Correo:</label>
                 <span th:text="${perfil.usuario.correo}"></span>
             </div>
+            <div th:if="${perfil.usuario.especialidad != null}">
             <div class="profile-item">
                 <label>Disponibilidad:</label>
                 <div class="available-days" id="available-days">
@@ -223,6 +224,7 @@
                 </ul>
             </div>
             <a th:href="@{/cita/agendar/{id}(id=${perfil.id})}" class="btn btn-primary mt-3">Agendar Cita</a>
+            </div>
             <a th:href="@{/perfil/modificar/{id}(id=${perfil.id})}" class="btn btn-secondary mt-3 edit-button" th:data-profile-user-id="${perfil.usuario.id}">Editar Perfil</a>
         </div>
     </div>
