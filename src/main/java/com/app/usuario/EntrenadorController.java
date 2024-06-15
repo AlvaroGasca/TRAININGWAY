@@ -46,7 +46,7 @@ public class EntrenadorController {
             // Guardar el usuario actualizado en la base de datos
             usuarioService.guardarUsuario(usuarioExistente);
         }
-        return "redirect:/noticias/mis-noticias";
+        return "redirect:/perfil/formularioPerfil";
     }
 
 }
