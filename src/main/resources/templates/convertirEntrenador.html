@@ -26,20 +26,11 @@
         <div id="nuevasEspecialidades">
             <!-- Aquí se agregarán los campos de las nuevas especialidades -->
         </div>
-        <button type="button" class="btn btn-primary" onclick="agregarCampoEspecialidad()">Agregar más especialidades</button>
         <button type="submit" class="btn btn-success">Enviar</button>
     </form>
 </div>
 
 <script>
-    function agregarCampoEspecialidad() {
-        var nuevasEspecialidadesDiv = document.getElementById("nuevasEspecialidades");
-        var nuevoCampoEspecialidad = document.createElement("div");
-        nuevoCampoEspecialidad.classList.add("mb-3");
-        nuevoCampoEspecialidad.innerHTML = '<label class="form-label">Especialidad:</label>' +
-            '<input type="text" class="form-control" name="especialidad">';
-        nuevasEspecialidadesDiv.appendChild(nuevoCampoEspecialidad);
-    }
 </script>
 
 </body>

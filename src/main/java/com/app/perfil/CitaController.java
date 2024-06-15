@@ -112,19 +112,47 @@ public class CitaController {
     if (perfil == null) {
         return "redirect:/perfil/formularioPerfil";
     }
-    model.addAttribute("citas", perfil.getCitas());
+
+    List<String> citas = new ArrayList<>(perfil.getCitas());
+
+    // Agrega las citas en las que el usuario es el cliente
+    List<Perfil> perfiles = perfilService.obtenerTodosLosPerfiles();
+    for (Perfil p : perfiles) {
+        for (String cita : p.getCitas()) {
+            if (cita.contains(username)) {
+                citas.add(cita);
+            }
+        }
+    }
+
+    model.addAttribute("citas", citas);
     return "misCitas";
 }
 
     // Nuevo método para cancelar una cita
     @PostMapping("/cancelar")
     public String cancelarCita(@RequestParam("cita") String cita, Principal principal) {
-        String username = principal.getName();
-        Usuario usuario = usuarioService.obtenerUsuarioPorUsername(username);
-        Perfil perfil = perfilService.obtenerPerfilPorUsuario(usuario);
+    String username = principal.getName();
+    Usuario usuario = usuarioService.obtenerUsuarioPorUsername(username);
+
+    // Primero, intentamos encontrar la cita en el perfil del usuario actual
+    Perfil perfil = perfilService.obtenerPerfilPorUsuario(usuario);
+    if (perfil != null && perfil.getCitas().contains(cita)) {
         perfil.getCitas().remove(cita);
         perfilService.guardarPerfil(perfil, perfil.getUsuario().getId());
-        return "redirect:/cita/mis-citas";
+    } else {
+        // Si no es el propietario, buscamos entre todos los perfiles
+        List<Perfil> perfiles = perfilService.obtenerTodosLosPerfiles();
+        for (Perfil p : perfiles) {
+            if (p.getCitas().contains(cita)) {
+                p.getCitas().remove(cita);
+                perfilService.guardarPerfil(p, p.getUsuario().getId());
+                break;
+            }
+        }
     }
+
+    return "redirect:/cita/mis-citas";
+}
 
 }

@@ -4,6 +4,8 @@
  */
 package com.app.perfil;
 
+import com.app.favoritos.Favorito;
+import com.app.favoritos.FavoritoService;
 import com.app.usuario.Especialidad;
 import com.app.usuario.Usuario;
 import com.app.usuario.UsuarioService;
@@ -33,6 +35,9 @@ public class PerfilController {
 
     @Autowired
     private UsuarioService usuarioService;
+    
+    @Autowired
+    private FavoritoService favoritoService;
 
     @GetMapping("/mi-perfil")
     public String perfilPorUsuario(Model model, Principal principal) {
@@ -117,6 +122,23 @@ public class PerfilController {
         }
         return "redirect:/perfil/mi-perfil";
     }
+    
 
+@PostMapping("/agregar-favorito/{id}")
+    public String agregarAFavoritos(@PathVariable Long id, Principal principal) {
+        favoritoService.agregarAFavoritos(id, principal.getName());
+        return "redirect:/perfil/favoritos";
+    }
 
+    @PostMapping("/eliminar-favorito/{id}")
+    public String eliminarDeFavoritos(@PathVariable Long id, Principal principal) {
+        favoritoService.eliminarDeFavoritos(id, principal.getName());
+        return "redirect:/perfil/favoritos";
+    }
+
+    @GetMapping("/favoritos")
+    public String listarFavoritos(Model model, Principal principal) {
+        model.addAttribute("favoritos", favoritoService.obtenerFavoritosPorUsuario(principal.getName()));
+        return "favoritos";
+    }
 }

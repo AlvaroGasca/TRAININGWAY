@@ -142,14 +142,14 @@
                             <li><a class="dropdown-item" th:href="@{/noticias/todas}">Noticias</a></li>
                             <li><a class="dropdown-item" th:href="@{/eventos/todos}">Eventos</a></li>
                             <li><a class="dropdown-item" th:href="@{/perfil/todos}">Entrenadores</a></li>
-                            <li><a class="dropdown-item" th:href="@{/tienda/todos}">Tienda</a></li>
+                            <li><a class="dropdown-item" th:href="@{/tienda/todos}">Artículos en Tendencia</a></li>
                             <li><a class="dropdown-item" th:href="@{/perfil/mi-perfil}">Perfil</a></li>
                         </ul>
                     </li>
                 </ul>
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Personas Favoritas</a>
+                        <a class="nav-link" th:href="@{/perfil/favoritos}">Favoritos</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -183,16 +183,17 @@
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="cita : ${citas}">
-                    <td th:text="${cita}">Fecha y Hora</td>
-                    <td>
-                        <form th:action="@{/cita/cancelar}" method="post">
-                            <input type="hidden" name="cita" th:value="${cita}" />
-                            <button type="submit" class="btn btn-danger">Cancelar</button>
-                        </form>
-                    </td>
-                </tr>
-            </tbody>
+    <tr th:each="cita : ${citas}">
+        <td th:text="${cita}">Fecha y Hora</td>
+        <td>
+            <form th:action="@{/cita/cancelar}" method="post" th:if="${#authentication.name == cita.split(' - ')[1] || #authentication.name == cita.split(' - ')[0]}">
+                <input type="hidden" name="cita" th:value="${cita}" />
+                <button type="submit" class="btn btn-danger">Cancelar</button>
+            </form>
+        </td>
+    </tr>
+</tbody>
+
         </table>
     </div>
 

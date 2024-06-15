@@ -24,6 +24,7 @@
         }
 
         .card {
+            position: relative;
             background-color: #fff;
             border-radius: 15px;
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); 
@@ -136,14 +137,18 @@
         .btn-like {
             background-color: transparent;
             border: none;
-            color: #dc3545;
-            font-size: 1.2rem;
+            color: #ffc107; /* Amarillo */
+            font-size: 1.5rem;
             display: flex;
             align-items: center;
+            cursor: pointer;
+            position: absolute;
+            top: 10px;
+            right: 10px;
         }
 
         .btn-like:hover {
-            color: #c82333;
+            color: #e0a800; /* Un tono más oscuro de amarillo */
         }
 
         .btn-like i {
@@ -181,18 +186,18 @@
                         <li><a class="dropdown-item" th:href="@{/noticias/todas}">Noticias</a></li>
                         <li><a class="dropdown-item" th:href="@{/eventos/todos}">Eventos</a></li>
                         <li><a class="dropdown-item" th:href="@{/perfil/todos}">Entrenadores</a></li>
-                        <li><a class="dropdown-item" th:href="@{/tienda/todos}">Tienda</a></li>
+                        <li><a class="dropdown-item" th:href="@{/tienda/todos}">Artículos en Tendencia</a></li>
                         <li><a class="dropdown-item" th:href="@{/perfil/mi-perfil}">Perfil</a></li>
                     </ul>
                 </li>
             </ul>
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Personas Favoritas</a>
+                   <a class="nav-link" th:href="@{/perfil/favoritos}">Favoritos</a>
                 </li>
                 <!-- Menú desplegable de ajustes -->
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" th:href="@{/perfil/favoritos}" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <!-- Ícono de engranaje -->
                         <i class="fas fa-cog"></i>
                     </a>
@@ -261,17 +266,14 @@
                 <input type="text" class="form-control" id="searchInput" placeholder="Buscar por deporte, título, fecha o cuerpo">
             </div>
         </div>
-        <div class="col-md-4">
-            <select id="filterSelect" class="form-select">
-                <option value="fecha">Ordenar por Fecha</option>
-                <option value="meGusta">Ordenar por Me Gusta</option>
-            </select>
-        </div>
     </div>
         <div class="row" id="perfilesContainer">
             <div th:each="perfil : ${perfiles}" class="col-md-4 perfil">
                 <div class="card mb-4">
                     <div class="card-body">
+                        <form th:action="@{/perfil/agregar-favorito/{id}(id=${perfil.id})}" method="post" style="position:absolute; top:10px; right:10px;">
+                            <button type="submit" class="btn-like"><i class="fas fa-star"></i></button>
+                        </form>
                         <h5 class="card-title" th:text="${perfil.usuario.nombre} + ' ' + ${perfil.usuario.apellidos}">Nombre del Entrenador</h5>
                         <p class="card-text" th:text="${perfil.descripcion}">Descripción del perfil...</p>
                         <p class="card-text"><small class="text-muted" th:text="${perfil.usuario.especialidad}">Especialidad</small></p>
@@ -285,7 +287,7 @@
             </div>
         </div>
     </div>
-
+    
     <footer>
         &copy; 2024 TrainingWay Inc. Todos los derechos reservados.
     </footer>
