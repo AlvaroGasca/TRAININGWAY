@@ -182,11 +182,11 @@
             </div>
             <div class="mb-3">
                 <label for="titulo" class="form-label">Título:</label>
-                <input type="text" class="form-control" id="titulo" name="titulo" th:value="${noticia.titulo}">
+                <input type="text" class="form-control" id="titulo" name="titulo" th:value="${noticia.titulo}" maxlength="200">
             </div>
             <div class="mb-3">
                 <label for="cuerpo" class="form-label">Cuerpo:</label>
-                <input type="text" class="form-control" id="cuerpo" name="cuerpo" th:value="${noticia.cuerpo}">
+                <input type="text" class="form-control" id="cuerpo" name="cuerpo" th:value="${noticia.cuerpo}" maxlength="450">
             </div>
             
             <div class="text-center">

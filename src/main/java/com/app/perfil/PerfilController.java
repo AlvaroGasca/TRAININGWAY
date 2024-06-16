@@ -54,11 +54,18 @@ public class PerfilController {
 }
     
     @GetMapping("/todos")
-    public String listarTodosLosPerfiles(Model model) {
-        List<Perfil> perfiles = perfilService.obtenerTodosLosPerfiles();
-        model.addAttribute("perfiles", perfiles);
-        return "listaPerfiles";
+    public String listarTodosLosPerfiles(Model model, Principal principal) {
+    List<Perfil> perfiles = perfilService.obtenerTodosLosPerfiles();
+    model.addAttribute("perfiles", perfiles);
+
+    if (principal != null) {
+        String username = principal.getName();
+        Usuario usuario = usuarioService.obtenerUsuarioPorUsername(username);
+        model.addAttribute("usuario", usuario);
     }
+
+    return "listaPerfiles";
+}
   
     @GetMapping("/formularioPerfil")
     public String mostrarFormularioPerfil(Model model, Authentication authentication) {

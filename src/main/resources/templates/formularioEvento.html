@@ -181,15 +181,15 @@
             </div>
             <div class="mb-3">
                 <label for="titulo" class="form-label">Título:</label>
-                <input type="text" id="titulo" name="titulo" th:field="*{titulo}" class="form-control" required>
+                <input type="text" id="titulo" name="titulo" th:field="*{titulo}" class="form-control" maxlength="200" required>
             </div>
             <div class="mb-3">
                 <label for="cuerpo" class="form-label">Cuerpo:</label>
-                <input type="text" id="cuerpo" name="cuerpo" th:field="*{cuerpo}" class="form-control" required>
+                <input type="text" id="cuerpo" name="cuerpo" th:field="*{cuerpo}" class="form-control" maxlength="450" required>
             </div>
             <div class="mb-3">
                 <label for="enlace" class="form-label">Enlace:</label>
-                <input type="url" id="enlace" name="enlace" th:field="*{enlace}" class="form-control" required>
+                <input type="url" id="enlace" name="enlace" th:field="*{enlace}" class="form-control" maxlength="200" required>
             </div>
             <input type="hidden" name="idUsuario" th:value="${usuario.id}" />
             <div class="text-center">

@@ -205,6 +205,9 @@
                         <li><a class="dropdown-item" th:href="@{/noticias/mis-noticias}">Mis Noticias</a></li>
                         <li><a class="dropdown-item" th:href="@{/eventos/mis-eventos}">Mis eventos</a></li>
                         <li><a class="dropdown-item" th:href="@{/cita/mis-citas}">Mis Citas</a></li>
+                        <li th:if="${usuario != null and usuario.especialidad == null}">
+                            <a class="dropdown-item" th:href="@{/convertirEntrenador/{id}(id=${usuario.id})}">Ser Entrenador</a>
+                        </li>
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Salir</a></li>
                     </ul>
@@ -228,22 +231,22 @@
             <div class="carousel-item active">
                 <img th:src="@{/assets/rowing.jpg}" class="d-block w-100" alt="...">
                 <div class="carousel-caption d-none d-md-block">
-                    <h5>Entrenador Destacado 1</h5>
-                    <p>Descripción breve del entrenador destacado 1.</p>
+                    <h5>Servicios Profesionales de Entrenadores de Remo</h5>
+                    <p>¡Mejora tu rendimiento en el remo con nuestros entrenadores profesionales!</p>
                 </div>
             </div>
             <div class="carousel-item">
                 <img th:src="@{/assets/snow.jpg}" class="d-block w-100" alt="...">
                 <div class="carousel-caption d-none d-md-block">
-                    <h5>Entrenador Destacado 2</h5>
-                    <p>Descripción breve del entrenador destacado 2.</p>
+                    <h5>Ciclismo en climas adversos</h5>
+                    <p>¿Listo para desafiar los paisajes nevados? Contacta con nosotros hoy y lleva tu ciclismo a otro nivel!</p>
                 </div>
             </div>
             <div class="carousel-item">
                 <img th:src="@{/assets/swimmers.jpg}" class="d-block w-100" alt="...">
                 <div class="carousel-caption d-none d-md-block">
-                    <h5>Entrenador Destacado 3</h5>
-                    <p>Descripción breve del entrenador destacado 3.</p>
+                    <h5>Transforma tu natación con los mejores entrenadores</h5>
+                    <p>¡Sumérgete con nosotros y descubre cómo alcanzar tu máximo potencial en el agua!</p>
                 </div>
             </div>
         </div>
@@ -276,8 +279,8 @@
                         </form>
                         <h5 class="card-title" th:text="${perfil.usuario.nombre} + ' ' + ${perfil.usuario.apellidos}">Nombre del Entrenador</h5>
                         <p class="card-text" th:text="${perfil.descripcion}">Descripción del perfil...</p>
-                        <p class="card-text"><small class="text-muted" th:text="${perfil.usuario.especialidad}">Especialidad</small></p>
-                        <p class="card-text"><small class="text-muted" th:text="${perfil.usuario.ubicacion}">Ubicación</small></p>
+                        <p class="card-text"><small class="text-muted especialidad" th:text="${perfil.usuario.especialidad}">Especialidad</small></p>
+                        <p class="card-text"><small class="text-muted ubicacion" th:text="${perfil.usuario.ubicacion}">Ubicación</small></p>
                         <p class="card-text"><small class="text-muted">Teléfono: <span th:text="${perfil.mostrarTelefono ? perfil.usuario.telefono : 'No disponible'}"></span></small></p>
                         <p class="card-text"><small class="text-muted">Correo: <span th:text="${perfil.mostrarCorreo ? perfil.usuario.correo : 'No disponible'}"></span></small></p>
                         <p class="card-text"><small class="text-muted">Disponibilidad: <span th:text="${perfil.disponibilidad}"></span></small></p>
@@ -303,8 +306,8 @@
             for (i = 0; i < cards.length; i++) {
                 title = cards[i].querySelector(".card-title");
                 body = cards[i].querySelector(".card-text");
-                speciality = cards[i].querySelector("small.text-muted");
-                location = cards[i].querySelector("small.text-muted:last-child");
+                speciality = cards[i].querySelector(".especialidad");
+                location = cards[i].querySelector(".ubicacion");
 
                 if (title || body || speciality || location) {
                     txtValue = title.textContent || title.innerText;

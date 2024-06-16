@@ -51,6 +51,10 @@ public class PerfilService {
     public List<Perfil> obtenerTodosLosPerfiles() {
         return perfilRepository.findAll();
     }
+    
+    public List<Perfil> buscarPerfilesPorUbicacion(String ubicacion) {
+        return perfilRepository.findByUbicacion(ubicacion);
+    }
 
 
 }

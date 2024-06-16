@@ -182,15 +182,15 @@
             </div>
             <div class="mb-3">
                 <label for="titulo" class="form-label">Título:</label>
-                <input type="text" class="form-control" id="titulo" name="titulo" th:value="${evento.titulo}">
+                <input type="text" class="form-control" id="titulo" name="titulo" th:value="${evento.titulo}" maxlength="200">
             </div>
             <div class="mb-3">
                 <label for="cuerpo" class="form-label">Cuerpo:</label>
-                <input type="text" class="form-control" id="cuerpo" name="cuerpo" th:value="${evento.cuerpo}">
+                <input type="text" class="form-control" id="cuerpo" name="cuerpo" th:value="${evento.cuerpo}" maxlength="450">
             </div>
             <div class="mb-3">
                 <label for="enlace" class="form-label">Enlace:</label>
-                <input type="url" class="form-control" id="enlace" name="enlace" th:value="${evento.enlace}">
+                <input type="url" class="form-control" id="enlace" name="enlace" th:value="${evento.enlace}" maxlength="200">
             </div>
             
             <div class="text-center">

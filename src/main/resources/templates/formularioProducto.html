@@ -156,11 +156,11 @@
             </div>
             <div class="mb-3">
                 <label for="cuerpo" class="form-label">Cuerpo:</label>
-                <input type="text" id="cuerpo" name="cuerpo" th:field="*{cuerpo}" class="form-control" required>
+                <input type="text" id="cuerpo" name="cuerpo" th:field="*{cuerpo}" class="form-control" maxlength="300" required>
             </div>
             <div class="mb-3">
                 <label for="enlace" class="form-label">Enlace:</label>
-                <input type="url" id="enlace" name="enlace" th:field="*{enlace}" class="form-control" required>
+                <input type="url" id="enlace" name="enlace" th:field="*{enlace}" class="form-control" maxlength="200"required>
             </div>
             <input type="hidden" name="idUsuario" th:value="${usuario.id}" />
             <div class="text-center">
